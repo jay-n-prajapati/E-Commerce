@@ -26,11 +26,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import Heading1 from '@/components/ui/headings/Heading1';
 import Heading2 from '@/components/ui/headings/Heading2';
 import Heading3 from '@/components/ui/headings/Heading3';
+import ThemeSwitch from '@/components/custom/ThemeSwitch';
 export default function Home() {
   const { toast } = useToast();
 
   return (
     <>
+      <ThemeSwitch />
       <Heading1 className=''>
         Hello I am Jay
       </Heading1>
