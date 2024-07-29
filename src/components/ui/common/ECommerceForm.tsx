@@ -54,12 +54,14 @@ export function ECommerceForm<T>({
   initialValues,
   onSubmit,
   elements,
+  children,
 }: {
   className?: string;
   formSchema: any;
   initialValues: T;
   onSubmit: (e: T) => void;
   elements: ECommerceFormElement<T>[];
+  children: React.ReactNode;
 }) {
   const [formData, setFormData] = useState<T>(initialValues);
 
@@ -257,7 +259,7 @@ export function ECommerceForm<T>({
             />
           );
         })}
-        <Button type="submit">Submit</Button>
+        {children}
       </form>
     </Form>
   );

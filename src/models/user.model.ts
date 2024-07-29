@@ -34,7 +34,7 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
     imgUrl: {
       type: String,
