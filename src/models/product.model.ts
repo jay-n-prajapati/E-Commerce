@@ -40,10 +40,10 @@ const productSchema: mongoose.Schema<IProduct> = new mongoose.Schema(
     thumbnailUrl: {
       type: String,
       required: true,
-      validate: {
-        validator: (v: string) => this.imageUrls.includes(v), // Validate thumbnailUrl exists in imageUrls
-        message: 'Thumbnail URL must be one of the provided image URLs.',
-      },
+      // validate: {
+      //   validator: (v: string) => this.imageUrls.includes(v), // Validate thumbnailUrl exists in imageUrls
+      //   message: 'Thumbnail URL must be one of the provided image URLs.',
+      // },
     },
     category: {
       type: String,
