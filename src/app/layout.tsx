@@ -4,8 +4,7 @@ import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/ui/providers/ThemeProvider';
 import { getServerSession } from 'next-auth';
-import { SessionProvider } from 'next-auth/react';
-import SessionProviderWrapper from '@/components/custom/SessionProvideWrapper';
+import SessionProviderWrapper from '@/components/ui/providers/SessionProvideWrapper';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -31,7 +30,7 @@ export default async function RootLayout({
         >
           <body className={`${inter.className} h-screen w-full`}>
             <Toaster />
-            <main>{children}</main>
+            <main className='size-full'>{children}</main>
           </body>
         </ThemeProvider>
       </SessionProviderWrapper>

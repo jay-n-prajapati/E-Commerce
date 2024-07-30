@@ -3,35 +3,46 @@
 import { Button } from '@/components/ui/button';
 import { ECommerceForm } from '@/components/ui/common/ECommerceForm';
 import { FcGoogle } from 'react-icons/fc';
-import Image from 'next/image';
 import { z } from 'zod';
 import Heading2 from '@/components/ui/headings/Heading2';
 import { signIn } from 'next-auth/react';
+import { ThemeSwitch } from '@/components/custom/ThemeSwitch';
+import useCustomToast from '@/hooks/useCustomToast';
+import { useRouter } from 'next/navigation';
 
-const formSchema = z.object({
+const LoginFormSchema = z.object({
   email: z.string().email('Email is required'),
   password: z.string({ message: 'Password is required' }),
 });
 
 export default function Login() {
+  const { showToast } = useCustomToast();
+  const router = useRouter();
+
+  const handleLogin = async (e: z.infer<typeof LoginFormSchema>) => {
+    const res = await signIn('credentials', {
+      ...e,
+      redirect: false,
+    });
+
+    if (res?.error) {
+      showToast('destructive', 'Login Error', res.error);
+    } else {
+      router.replace('/');
+      showToast('success', 'Login Success', 'Successfully Logged In');
+    }
+  };
+
   return (
     <>
-      <div className="flex size-full">
-        <div className="relative hidden size-full items-center justify-center lg:flex lg:basis-[50%]">
-          <Image
-            src="/images/Fingerprint-cuate.svg"
-            alt="login-illustrator"
-            fill
-            objectFit="cover"
-            priority
-            className="bg-primary p-20"
-          />
-        </div>
-        <div className="flex size-full items-center justify-center lg:basis-[50%]">
-          <div className="w-[90%] md:w-[70%]">
+      <ThemeSwitch />
+      <div className="flex size-full p-4">
+        <div className="mx-auto flex size-full items-center justify-center">
+          <div className="w-full sm:w-[50%] lg:md:w-96">
             <div>
-              <Heading2 className="mb-6 text-center font-semibold text-primary">
-                Login to account
+              <Heading2 className="mb-6 text-center font-semibold">
+                Welcome Back to
+                <div className="text-primary">E-Commerce</div>
               </Heading2>
             </div>
             <div className="mb-4">
@@ -53,16 +64,16 @@ export default function Login() {
               <span className="mx-4">OR</span>
               <hr className="w-full" />
             </div>
-            <ECommerceForm
-              onSubmit={(e) => console.log(e)}
-              formSchema={formSchema}
+            <ECommerceForm<z.infer<typeof LoginFormSchema>>
+              onSubmit={handleLogin}
+              formSchema={LoginFormSchema}
               className="w-full"
               elements={[
                 {
                   type: 'input',
                   label: 'Email',
                   key: 'email',
-                  placeholder: 'Enter your name',
+                  placeholder: 'Enter your email',
                 },
                 {
                   type: 'password',

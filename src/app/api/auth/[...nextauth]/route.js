@@ -26,25 +26,19 @@ export const authOptions = {
           email: credentials?.email,
           password: credentials?.password,
         };
-        const res = await fetch('http://localhost:3000/api/login', {
+        const res = await fetch(`${process.env.API_BASEURL}/login`, {
           method: 'POST',
           body: JSON.stringify(requestBody),
           headers: { 'Content-Type': 'application/json' },
         });
-        const resdata = await res.json();
-        console.log('Login...', resdata);
-        if (
-          resdata.status === 400 ||
-          resdata.status === 401 ||
-          resdata.status === 403 ||
-          resdata.status === 500
-        ) {
-          return null;
+        const data = await res.json();
+        console.log('Login...', data);
+        if (!data.success) {
+          throw new Error(data.message);
         }
-        if (resdata.status === 200 || resdata.status === 201) {
-          return resdata.user;
+        if (data.success) {
+          return data.user;
         }
-        // Return null if user data could not be retrieved
         return null;
       },
     }),

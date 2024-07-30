@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Form,
   FormControl,
@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from '../form';
 import { Input } from '../input';
-import { Button } from '../button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -39,7 +38,7 @@ export type ECommerceFormElement<T> = {
     | 'color'
     | 'select'
     | 'file';
-  key: string;
+  key: keyof T;
   syncKey?: keyof T | undefined;
   syncWith?: syncWithObj<T>[] | undefined;
   selectItems?: string[] | [];
@@ -59,17 +58,11 @@ export function ECommerceForm<T>({
   className?: string;
   formSchema: any;
   initialValues: T;
-  onSubmit: (e: T) => void;
+  onSubmit: (data: T) => void;
   elements: ECommerceFormElement<T>[];
   children: React.ReactNode;
 }) {
   const [formData, setFormData] = useState<T>(initialValues);
-
-  useEffect(() => {
-    if (JSON.stringify(formData) === JSON.stringify(initialValues)) {
-      setFormData(initialValues);
-    }
-  }, [initialValues]);
 
   const [showPass, setShowPass] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -114,7 +107,7 @@ export function ECommerceForm<T>({
               <FormField
                 key={idx}
                 control={form.control}
-                name={ele.key}
+                name={ele.key as string}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{ele.label}</FormLabel>
@@ -155,7 +148,7 @@ export function ECommerceForm<T>({
               <FormField
                 key={idx}
                 control={form.control}
-                name={ele.key}
+                name={ele.key as string}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{ele.label}</FormLabel>
@@ -188,7 +181,7 @@ export function ECommerceForm<T>({
               <FormField
                 key={idx}
                 control={form.control}
-                name={ele.key}
+                name={ele.key as string}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>{ele.label}</FormLabel>
@@ -232,7 +225,7 @@ export function ECommerceForm<T>({
             <FormField
               key={idx}
               control={form.control}
-              name={ele.key}
+              name={ele.key as string}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>{ele.label}</FormLabel>

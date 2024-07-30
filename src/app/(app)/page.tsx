@@ -1,11 +1,6 @@
 'use client';
 
-import Heading1 from '@/components/ui/headings/Heading1';
-import Heading2 from '@/components/ui/headings/Heading2';
-import Heading3 from '@/components/ui/headings/Heading3';
-import { ECommerceForm } from '@/components/ui/common/ECommerceForm';
 import { z } from 'zod';
-import { ThemeSwitch } from '@/components/custom/ThemeSwitch';
 import {
   Card,
   CardContent,
@@ -216,72 +211,27 @@ export default function Home() {
   const session = useSession();
   return (
     <>
-      {JSON.stringify(session)}
-      <ThemeSwitch />
-      <Heading1 className="">Hello I am Jay</Heading1>
-      <Heading2 className="">Hello I am Jay</Heading2>
-      <Heading3 className="">Hello I am Jay</Heading3>
+      <div className="bg-red-300">{JSON.stringify(session)}</div>
       <div>
-        <ECommerceForm
-          onSubmit={(e) => console.log(e)}
-          formSchema={formSchema}
-          className="mx-auto max-w-96"
-          elements={[
-            {
-              type: 'input',
-              label: 'Name',
-              key: 'username',
-              placeholder: 'Enter your name',
-            },
-            {
-              type: 'input',
-              label: 'Name',
-              key: 'lastName',
-              placeholder: 'Enter your name',
-            },
-            {
-              type: 'password',
-              label: 'Password',
-              key: 'password',
-            },
-            {
-              type: 'textarea',
-              label: 'Message',
-              key: 'message',
-              placeholder: 'Enter your Message',
-            },
-            {
-              type: 'select',
-              label: 'Suburb',
-              key: 'suburb',
-              placeholder: 'select your name',
-              selectItems: ['abc', 'xyz', 'pqr'],
-            },
-          ]}
-          initialValues={{}}
-        />
-
-        <div className="container mx-auto">
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {prods.map((prod, idx) => (
-              <Card key={idx}>
-                <CardHeader>
-                  <div className="relative h-40">
-                    <Image src={prod.thumbnail} alt={prod.title} fill />
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <CardTitle>{prod.title}</CardTitle>
-                  <CardDescription>{prod.description}</CardDescription>
-                </CardContent>
-                <CardFooter>
-                  <div>
-                    <Button>Add to Cart</Button>
-                  </div>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {prods.map((prod, idx) => (
+            <Card key={idx} className="shadow-md duration-300 hover:shadow-xl">
+              <CardHeader>
+                <div className="relative h-40">
+                  <Image src={prod.thumbnail} alt={prod.title} fill />
+                </div>
+              </CardHeader>
+              <CardContent>
+                <CardTitle>{prod.title}</CardTitle>
+                <CardDescription>{prod.description}</CardDescription>
+              </CardContent>
+              <CardFooter>
+                <div>
+                  <Button>Add to Cart</Button>
+                </div>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
       </div>
     </>
