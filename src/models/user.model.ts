@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import { UserRole } from '@/constants/enums';
 
-interface IUser {
+export interface IUser {
   name: string;
   email: string;
   password: string;
@@ -34,11 +34,9 @@ const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
     },
     password: {
       type: String,
-      // required: true,
     },
     imgUrl: {
       type: String,
-      required: true,
     },
     role: {
       type: String,

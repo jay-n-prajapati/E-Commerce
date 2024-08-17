@@ -3,6 +3,7 @@ import User from '@/models/user.model';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { EndPoint } from '@/constants/enums';
 
 export const authOptions = {
   session: {
@@ -19,27 +20,51 @@ export const authOptions = {
     }),
     CredentialsProvider({
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null; // Invalid credentials
+
+        const endPoint = credentials.type;
+
+        if (endPoint === EndPoint.SIGNUP) {
+          const requestBody = {
+            name: credentials?.username,
+            email: credentials?.email,
+            password: credentials?.password,
+          };
+          const res = await fetch(`${process.env.API_BASEURL}/${EndPoint.SIGNUP}`, {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          const data = await res.json();
+          console.log('signup...', data);
+          if (!data.success) {
+            throw new Error(data.message);
+          }
+          if (data.success) {
+            return data.user;
+          }
+          return null
         }
-        const requestBody = {
-          email: credentials?.email,
-          password: credentials?.password,
-        };
-        const res = await fetch(`${process.env.API_BASEURL}/login`, {
-          method: 'POST',
-          body: JSON.stringify(requestBody),
-          headers: { 'Content-Type': 'application/json' },
-        });
-        const data = await res.json();
-        console.log('Login...', data);
-        if (!data.success) {
-          throw new Error(data.message);
+        if (endPoint === EndPoint.LOGIN) {
+          const requestBody = {
+            email: credentials?.email,
+            password: credentials?.password,
+          };
+          const res = await fetch(`${process.env.API_BASEURL}/${EndPoint.LOGIN}`, {
+            method: 'POST',
+            body: JSON.stringify(requestBody),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          const data = await res.json();
+          console.log('Login...', data);
+          if (!data.success) {
+            throw new Error(data.message);
+          }
+          if (data.success) {
+            return data.user;
+          }
+          return null;
         }
-        if (data.success) {
-          return data.user;
-        }
-        return null;
+
       },
     }),
   ],
