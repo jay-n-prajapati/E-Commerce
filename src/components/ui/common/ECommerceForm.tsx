@@ -22,6 +22,7 @@ import {
 import { cn } from '@/lib/utils';
 import { EyeIcon, EyeOffIcon } from 'lucide-react';
 import { Textarea } from '../textarea';
+import { ISelectItems } from '@/constants/interfaces';
 
 type syncWithObj<T> = {
   syncWithKey: keyof T;
@@ -41,7 +42,7 @@ export type ECommerceFormElement<T> = {
   key: keyof T;
   syncKey?: keyof T | undefined;
   syncWith?: syncWithObj<T>[] | undefined;
-  selectItems?: string[] | [];
+  selectItems?: ISelectItems[] | [];
   placeholder?: string;
   label: string;
   description?: string;
@@ -62,12 +63,10 @@ export function ECommerceForm<T>({
   elements: ECommerceFormElement<T>[];
   children: React.ReactNode;
 }) {
-  const [formData, setFormData] = useState<T>(initialValues);
-
   const [showPass, setShowPass] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: formData,
+    defaultValues: initialValues,
     mode: 'onChange',
   });
 
@@ -77,22 +76,14 @@ export function ECommerceForm<T>({
     syncKey?: keyof T,
     syncWith?: syncWithObj<T>[]
   ) => {
-    setFormData((prevState) => {
-      const newState = {
-        ...prevState,
-        [key]: value,
-      };
-
-      if (key === syncKey && syncWith) {
-        syncWith.forEach((syncWithObj) => {
-          const { syncWithKey, transformFunction } = syncWithObj;
-          newState[syncWithKey] = transformFunction
-            ? transformFunction(value)
-            : value;
-        });
-      }
-      return newState;
-    });
+    form.setValue(key as string, value);
+    if (key === syncKey && syncWith) {
+      syncWith.forEach((syncWithObj) => {
+        const { syncWithKey, transformFunction } = syncWithObj;
+        const newVal = transformFunction ? transformFunction(value) : value;
+        form.setValue(syncWithKey as string, newVal);
+      });
+    }
   };
 
   return (
@@ -112,9 +103,9 @@ export function ECommerceForm<T>({
                   <FormItem>
                     <FormLabel>{ele.label}</FormLabel>
                     <Select
-                      defaultValue={formData[ele.key] as string}
+                      name={ele.key as string}
+                      defaultValue={field.value}
                       onValueChange={(value) => {
-                        field.onChange(value);
                         onFieldChange(
                           value,
                           ele.key as keyof T,
@@ -159,7 +150,6 @@ export function ECommerceForm<T>({
                         className="resize-none"
                         {...field}
                         onChange={(e) => {
-                          field.onChange(e.target.value);
                           onFieldChange(
                             e.target.value,
                             ele.key as keyof T,
@@ -192,7 +182,6 @@ export function ECommerceForm<T>({
                           placeholder="Enter your password"
                           {...field}
                           onChange={(e) => {
-                            field.onChange(e.target.value);
                             onFieldChange(
                               e.target.value,
                               ele.key as keyof T,
@@ -233,9 +222,7 @@ export function ECommerceForm<T>({
                     <Input
                       placeholder={ele.placeholder}
                       {...field}
-                      value={formData[ele.key] as string}
                       onChange={(e) => {
-                        field.onChange(e.target.value);
                         onFieldChange(
                           e.target.value,
                           ele.key as keyof T,

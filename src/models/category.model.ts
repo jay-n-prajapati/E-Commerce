@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 
-interface ICategory {
-    name: string;
-    slug: string; 
-    createdAt?: Date;
-    updatedAt?: Date;
-  }
-  
+export interface ICategory {
+  _id?: mongoose.Schema.Types.ObjectId;
+  name: string;
+  slug: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
 // Define the schema for the Category model
 const categorySchema: mongoose.Schema<ICategory> = new mongoose.Schema(
   {

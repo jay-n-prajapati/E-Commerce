@@ -10,7 +10,7 @@ const Heading4 = ({ children, className }: IProps) => {
   return (
     <h1
       className={cn(
-        'text-xl font-semibold tracking-tight lg:text-2xl',
+        'text-xl font-semibold tracking-tight text-primary lg:text-2xl',
         className
       )}
     >

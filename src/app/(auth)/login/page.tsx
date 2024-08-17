@@ -9,6 +9,8 @@ import { signIn } from 'next-auth/react';
 import { ThemeSwitch } from '@/components/custom/ThemeSwitch';
 import useCustomToast from '@/hooks/useCustomToast';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { EndPoint } from '@/constants/enums';
 
 const LoginFormSchema = z.object({
   email: z.string().email('Email is required'),
@@ -22,6 +24,7 @@ export default function Login() {
   const handleLogin = async (e: z.infer<typeof LoginFormSchema>) => {
     const res = await signIn('credentials', {
       ...e,
+      type: EndPoint.LOGIN,
       redirect: false,
     });
 
@@ -35,7 +38,6 @@ export default function Login() {
 
   return (
     <>
-      <ThemeSwitch />
       <div className="flex size-full p-4">
         <div className="mx-auto flex size-full items-center justify-center">
           <div className="w-full sm:w-[50%] lg:md:w-96">
@@ -90,6 +92,14 @@ export default function Login() {
                 </Button>
               </div>
             </ECommerceForm>
+            <div className="text-center">
+              Don't have an account?
+              <span>
+                <Link href={'/signup'}>
+                  <Button variant={'link'}>Signup here</Button>
+                </Link>
+              </span>
+            </div>
           </div>
         </div>
       </div>

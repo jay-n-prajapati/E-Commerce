@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/ui/providers/ThemeProvider';
 import { getServerSession } from 'next-auth';
 import SessionProviderWrapper from '@/components/ui/providers/SessionProvideWrapper';
+import QueryClientProviderWrapper from '@/components/ui/providers/QueryClientProvider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-const inter = Inter({ subsets: ['latin'] });
+const manrope = Manrope({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -22,17 +24,21 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <SessionProviderWrapper session={session!}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <body className={`${inter.className} h-screen w-full`}>
-            <Toaster />
-            <main className='size-full'>{children}</main>
-          </body>
-        </ThemeProvider>
+        <QueryClientProviderWrapper>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <body
+              className={`${manrope.className} h-screen w-screen overflow-x-hidden`}
+            >
+              <ReactQueryDevtools initialIsOpen={false} /> <Toaster />
+              <main className="size-full">{children}</main>
+            </body>
+          </ThemeProvider>
+        </QueryClientProviderWrapper>
       </SessionProviderWrapper>
     </html>
   );

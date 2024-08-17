@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-
-interface IOrder {
+export interface IOrder {
+  id: mongoose.Schema.Types.ObjectId;
   user: mongoose.Schema.Types.ObjectId; // Reference to the User who placed the order
   products: {
     product: mongoose.Schema.Types.ObjectId; // Reference to the Product in the order
