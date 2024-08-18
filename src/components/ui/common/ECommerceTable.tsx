@@ -88,7 +88,7 @@ const ECommerceTable = <TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="py-4 text-lg font-bold text-primary"
+                      className="py-4 font-bold text-primary"
                     >
                       {header.isPlaceholder
                         ? null
