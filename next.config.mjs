@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['cdn.dummyjson.com'],
+    domains: ['cdn.dummyjson.com', 'jay-ecommerce.s3.ap-south-1.amazonaws.com'],
   },
   async headers() {
     return [

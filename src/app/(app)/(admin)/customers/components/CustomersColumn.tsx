@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { IUser } from '@/models/user.model';
 import ECommerceAvatar from '@/components/ui/common/ECommerceAvatar';
+import ECommerceTableHeader from '@/components/ui/common/ECommerceTableHeader';
 
 const columnHelper = createColumnHelper<IUser>();
 
@@ -51,51 +52,20 @@ export const CustomersColumns = [
 
   columnHelper.accessor('name', {
     header: ({ column }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <div className="flex justify-center gap-1">
-            <span>Name</span>
-            <ECommerceSortDropDown column={column} />
-          </div>
-          <Input
-            placeholder=""
-            className="w-1/2 py-0"
-            onChange={(e) => column.setFilterValue(e.target.value)}
-          />
-        </div>
-      );
+      return <ECommerceTableHeader column={column} header="Name" />;
     },
     sortingFn: 'alphanumericCaseSensitive',
     filterFn: 'includesString',
   }),
   columnHelper.accessor('email', {
     header: ({ column }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <div className="flex justify-center gap-1">
-            <span>Email</span>
-            <ECommerceSortDropDown column={column} />
-          </div>
-          <Input
-            placeholder=""
-            className="w-1/2 py-0"
-            onChange={(e) => column.setFilterValue(e.target.value)}
-          />
-        </div>
-      );
+      return <ECommerceTableHeader column={column} header="Email" />;
     },
     sortingFn: 'datetime',
   }),
   columnHelper.accessor('orders', {
     header: ({ column }) => {
-      return (
-        <div className="flex items-center gap-2">
-          <div className="flex justify-center gap-1">
-            <span>Orders</span>
-            <ECommerceSortDropDown column={column} />
-          </div>
-        </div>
-      );
+      return <ECommerceTableHeader column={column} header="Orders" />;
     },
     cell: ({ row }) => row.original.orders?.length,
     sortingFn: 'alphanumericCaseSensitive',

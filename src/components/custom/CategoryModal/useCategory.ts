@@ -4,7 +4,6 @@ import useCustomToast from '@/hooks/useCustomToast';
 import { axiosInstance } from '@/lib/network';
 import { ICategory } from '@/models/category.model';
 import { useMutation } from '@tanstack/react-query';
-import { error } from 'console';
 
 const useCategory = () => {
   const { showToast } = useCustomToast();

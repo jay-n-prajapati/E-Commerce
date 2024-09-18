@@ -10,7 +10,7 @@ const Customers = () => {
   const { data } = useCustomers();
   return (
     <>
-      <div className="rounded-t-lg border bg-primary-foreground p-4">
+      <div className="size-full rounded-t-lg border bg-primary-foreground p-4">
         <div>
           <Heading3 className="mb-1 font-bold">Customers</Heading3>
           <p className="font-medium">

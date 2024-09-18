@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Form,
   FormControl,
@@ -25,7 +25,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
 import CategoryModal from '@/components/custom/CategoryModal/CategoryModal';
-import useProduct from '../hooks/useProduct';
+import useProduct from '../../hooks/useProduct';
+import ECommerceImageUpload from '@/components/ui/common/ECommerceImageUpload';
+import { useRouter } from 'next/navigation';
 
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
@@ -34,12 +36,15 @@ const productFormSchema = z.object({
     .min(10, '* Minimum 10 characters required')
     .max(30, 'Maximum word limit is 30'),
   category: z.string({ message: '* Category is required' }),
-  stock: z.number(),
-  price: z.number(),
+  stockQuantity: z.string(),
+  price: z.string(),
+  thumbnailUrl: z.string(),
+  imageUrls: z.array(z.string()).length(4, '* min. 4 images required'),
 });
 
 const AddProduct = () => {
-  const { categoriesData } = useProduct();
+  const { categoriesData, upsertProductLoading, saveProduct } = useProduct();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof productFormSchema>>({
     resolver: zodResolver(productFormSchema),
@@ -47,7 +52,17 @@ const AddProduct = () => {
     mode: 'onBlur',
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: z.infer<typeof productFormSchema>) => {
+    const res = await saveProduct({
+      ...data,
+      price: +data.price,
+      stockQuantity: +data.stockQuantity,
+    });
+    if (res) {
+      router.push('/products');
+    }
+    console.log({ data });
+  };
 
   return (
     <>
@@ -109,10 +124,17 @@ const AddProduct = () => {
                       <FormItem>
                         <FormLabel>Product Category</FormLabel>
                         <div className="flex items-center gap-4">
-                          <Select>
+                          <Select
+                            onValueChange={(value) =>
+                              form.setValue('category', value)
+                            }
+                          >
                             <FormControl>
                               <SelectTrigger>
-                                <SelectValue placeholder={'Select Category'} />
+                                <SelectValue
+                                  placeholder={'Select Category'}
+                                  defaultValue={field.value}
+                                />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -140,8 +162,6 @@ const AddProduct = () => {
                   />
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
                   <Heading4>Stock and Price</Heading4>
@@ -153,7 +173,7 @@ const AddProduct = () => {
                   <div className="sm:basis-1/2">
                     <FormField
                       control={form.control}
-                      name="stock"
+                      name="stockQuantity"
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>Stock</FormLabel>
@@ -190,6 +210,8 @@ const AddProduct = () => {
                   </div>
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
                   <Heading4>Product Images</Heading4>
@@ -197,7 +219,28 @@ const AddProduct = () => {
                     Lorem ipsum, dolor sit amet consectetur adipisicing.
                   </p>
                 </div>
-                <div></div>
+                <div>
+                  <ECommerceImageUpload
+                    onChange={(e) => {
+                      form.setValue('imageUrls', e);
+                      form.setValue('thumbnailUrl', e[0]);
+                    }}
+                  />
+                  <FormMessage className="mt-2">
+                    {form.formState.errors.imageUrls &&
+                      '* min. 4 images required'}
+                  </FormMessage>
+                </div>
+              </div>
+              <div className="flex gap-6">
+                <Button
+                  size={'lg'}
+                  type="submit"
+                  isLoading={upsertProductLoading}
+                  disabled={upsertProductLoading}
+                >
+                  Save Product
+                </Button>
               </div>
             </div>
           </div>

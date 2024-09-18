@@ -1,13 +1,13 @@
 import { IApiResponse } from '@/constants/interfaces';
 import { mongoInit } from '@/lib/db/dbConfig';
 import Category, { ICategory } from '@/models/category.model';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     mongoInit();
-    const categories = await Category.find();
-    return NextResponse.json<IApiResponse<ICategory>>({
+    const categories: ICategory[] = await Category.find();
+    return NextResponse.json<IApiResponse<ICategory[]>>({
       success: true,
       status: 200,
       message: '',

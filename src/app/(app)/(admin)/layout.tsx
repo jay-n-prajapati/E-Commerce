@@ -9,7 +9,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
       <div className="fixed left-0 top-0 z-50">
         <ECommerceSidebar />
       </div>
-      <div className="container flex size-full flex-col gap-2 p-6 pl-20">
+      <div className="container flex size-full flex-col gap-4 p-6 pl-20">
         <div className="flex justify-end gap-2">
           <ECommerceAvatar src="" username="Admin" />
           <ThemeSwitch />

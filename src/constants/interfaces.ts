@@ -8,5 +8,5 @@ export interface IApiResponse<T> {
 }
 export interface ISelectItems {
   label: string;
-  value: ObjectId;
+  value: string;
 }
