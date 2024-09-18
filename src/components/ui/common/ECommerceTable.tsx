@@ -46,8 +46,8 @@ interface DataTableProps<TData, TValue> {
 }
 
 const ECommerceTable = <TData, TValue>({
-  columns,
   data,
+  columns,
 }: DataTableProps<TData, TValue>) => {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
