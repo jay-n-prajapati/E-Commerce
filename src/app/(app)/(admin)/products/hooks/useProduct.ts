@@ -17,7 +17,7 @@ const useProduct = () => {
     return data.data;
   };
 
-  const { data: productsData } = useQuery({
+  const { data: productsData, isLoading: productsLoading } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts,
   });
@@ -99,11 +99,10 @@ const useProduct = () => {
     return true;
   };
 
-  console.log({ productsData });
-
   return {
     categoriesData: categories,
     productsData: productsData ?? [],
+    productsLoading,
     upsertProductLoading,
     saveProduct,
   };

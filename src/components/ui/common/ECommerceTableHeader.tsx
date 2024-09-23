@@ -7,19 +7,17 @@ const ECommerceTableHeader = ({
   column,
   header,
 }: {
-  column: Column<any, any>;
+  column: Column<unknown, unknown>;
   header: string;
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2">
-      <span>{header}</span>
-      <div className="flex items-center justify-center rounded border">
-        <Input
-          className="h-8 border-none py-0 outline-none focus-visible:ring-0"
-          onChange={(e) => column.setFilterValue(e.target.value)}
-        />
-        <ECommerceSortDropDown column={column} />
-      </div>
+    <div className="flex items-center justify-center rounded border">
+      <Input
+        className="h-8 border-none py-0 outline-none placeholder:text-primary/70 focus-visible:ring-0"
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        placeholder={header}
+      />
+      <ECommerceSortDropDown column={column} />
     </div>
   );
 };

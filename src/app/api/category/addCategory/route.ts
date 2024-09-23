@@ -17,13 +17,13 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const existSlug = await Category.findOne({ slug });
+    const existCategories = await Category.find({ $or: [{ name }, { slug }] });
 
-    if (existSlug) {
+    if (existCategories.length !== 0) {
       return NextResponse.json<IApiResponse<ICategory>>({
         status: 400,
         success: false,
-        message: 'Slug Already Exist!',
+        message: 'Name or Slug Already Exist!',
         data: null,
       });
     }
@@ -42,5 +42,11 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.log({ error });
+    return NextResponse.json<IApiResponse<ICategory>>({
+      success: false,
+      status: 500,
+      message: 'Internal Server Error',
+      data: null,
+    });
   }
 }

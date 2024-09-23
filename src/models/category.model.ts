@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface ICategory {
-  _id?: mongoose.Schema.Types.ObjectId;
+  id: mongoose.Schema.Types.ObjectId | string;
   name: string;
   slug: string;
   createdAt?: Date;
@@ -18,7 +18,6 @@ const categorySchema: mongoose.Schema<ICategory> = new mongoose.Schema(
     slug: {
       type: String,
       required: true,
-      unique: true,
     },
     createdAt: {
       type: Date,
@@ -31,10 +30,25 @@ const categorySchema: mongoose.Schema<ICategory> = new mongoose.Schema(
   },
   {
     versionKey: false,
+    toJSON: {
+      virtuals: true, // Include virtuals when converting to JSON
+      transform(doc, ret) {
+        delete ret._id; // Remove the _id field from the response
+      },
+    },
+    toObject: {
+      virtuals: true, // Include virtuals when converting to a plain object
+      transform(doc, ret) {
+        delete ret._id; // Remove the _id field from the response
+      },
+    },
   }
 );
 
-// Compile the schema into a model
+categorySchema.virtual('id').get(function () {
+  return this._id;
+});
+
 const Category =
   (mongoose.models.Category as mongoose.Model<ICategory>) ||
   mongoose.model<ICategory>('Category', categorySchema);

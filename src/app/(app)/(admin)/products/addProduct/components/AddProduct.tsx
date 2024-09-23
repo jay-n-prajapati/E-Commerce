@@ -24,10 +24,10 @@ import {
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
-import CategoryModal from '@/components/custom/CategoryModal/CategoryModal';
 import useProduct from '../../hooks/useProduct';
 import ECommerceImageUpload from '@/components/ui/common/ECommerceImageUpload';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
@@ -61,14 +61,13 @@ const AddProduct = () => {
     if (res) {
       router.push('/products');
     }
-    console.log({ data });
   };
 
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid gap-6 py-4 lg:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
@@ -149,12 +148,12 @@ const AddProduct = () => {
                               ))}
                             </SelectContent>
                           </Select>
-                          <CategoryModal>
-                            <Button type="button" size={'sm'}>
+                          <Link href={'/addCategory'}>
+                            <Button type="button">
                               <CirclePlus className="size-4" />
                               Add Category
                             </Button>
-                          </CategoryModal>
+                          </Link>
                         </div>
                         <FormMessage />
                       </FormItem>

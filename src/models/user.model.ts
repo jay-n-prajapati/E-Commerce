@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { UserRole } from '@/constants/enums';
 
 export interface IUser {
+  id: mongoose.Schema.Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -23,6 +24,7 @@ export interface IUser {
 
 const userSchema: mongoose.Schema<IUser> = new mongoose.Schema(
   {
+    id: { type: mongoose.Schema.Types.ObjectId },
     name: {
       type: String,
       required: true,

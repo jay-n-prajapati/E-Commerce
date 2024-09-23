@@ -1,6 +1,4 @@
-import ECommerceSortDropDown from '@/components/ui/common/ECommerceSortDropDown';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { IUser } from '@/models/user.model';
 import ECommerceAvatar from '@/components/ui/common/ECommerceAvatar';
@@ -24,13 +22,12 @@ export const CustomersColumns = [
       </div>
     ),
 
-    cell: ({ row, table }) => (
+    cell: ({ row }) => (
       <div>
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            console.log(table.getSelectedRowModel().rows);
           }}
         />
       </div>

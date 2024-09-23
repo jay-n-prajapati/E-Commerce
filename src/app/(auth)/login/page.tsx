@@ -6,7 +6,6 @@ import { FcGoogle } from 'react-icons/fc';
 import { z } from 'zod';
 import Heading2 from '@/components/ui/headings/Heading2';
 import { signIn } from 'next-auth/react';
-import { ThemeSwitch } from '@/components/custom/ThemeSwitch';
 import useCustomToast from '@/hooks/useCustomToast';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -93,7 +92,7 @@ export default function Login() {
               </div>
             </ECommerceForm>
             <div className="text-center">
-              Don't have an account?
+              Do Not have an account?
               <span>
                 <Link href={'/signup'}>
                   <Button variant={'link'}>Signup here</Button>

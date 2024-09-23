@@ -7,14 +7,12 @@ const useCustomers = () => {
     return data.data;
   };
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['customers'],
     queryFn: getAllCustomers,
   });
 
-  console.log('query', data);
-
-  return { data: data ?? [] };
+  return { data: data ?? [], isLoading };
 };
 
 export default useCustomers;

@@ -1,18 +1,28 @@
 import React from 'react';
-import NoProducts from './components/NoProducts';
+// import NoProducts from './components/NoProducts';
 import ProductManage from './components/ProductManage';
-import Heading3 from '@/components/ui/headings/Heading3';
+import Heading2 from '@/components/ui/headings/Heading2';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { CirclePlus } from 'lucide-react';
 
 const Products = () => {
   return (
-    <div className="flex size-full flex-col gap-6 rounded-t-lg border bg-primary-foreground p-4">
-      <div>
-        <Heading3 className="font-bold text-primary">Inventory</Heading3>
-        <p className="font-medium">
-          Manage your Products and view their details.
-        </p>
+    <div className="flex min-h-full flex-col gap-6 rounded-lg border bg-primary-foreground p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <Heading2 className="font-bold text-primary">Inventory</Heading2>
+          <p className="font-medium">
+            Manage your Products and view their details.
+          </p>
+        </div>
+        <Link href={'/products/addProduct'}>
+          <Button className="font-bold">
+            <CirclePlus className="size-5" /> Add Product
+          </Button>
+        </Link>
       </div>
-      <div className="size-full">
+      <div className="flex-grow">
         {/* <NoProducts /> */}
         <ProductManage />
       </div>

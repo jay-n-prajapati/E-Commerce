@@ -20,7 +20,6 @@ export const authOptions = {
     }),
     CredentialsProvider({
       async authorize(credentials) {
-
         const endPoint = credentials.type;
 
         if (endPoint === EndPoint.SIGNUP) {
@@ -29,33 +28,15 @@ export const authOptions = {
             email: credentials?.email,
             password: credentials?.password,
           };
-          const res = await fetch(`${process.env.API_BASEURL}/${EndPoint.SIGNUP}`, {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: { 'Content-Type': 'application/json' },
-          });
+          const res = await fetch(
+            `${process.env.API_BASEURL}/${EndPoint.SIGNUP}`,
+            {
+              method: 'POST',
+              body: JSON.stringify(requestBody),
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
           const data = await res.json();
-          console.log('signup...', data);
-          if (!data.success) {
-            throw new Error(data.message);
-          }
-          if (data.success) {
-            return data.user;
-          }
-          return null
-        }
-        if (endPoint === EndPoint.LOGIN) {
-          const requestBody = {
-            email: credentials?.email,
-            password: credentials?.password,
-          };
-          const res = await fetch(`${process.env.API_BASEURL}/${EndPoint.LOGIN}`, {
-            method: 'POST',
-            body: JSON.stringify(requestBody),
-            headers: { 'Content-Type': 'application/json' },
-          });
-          const data = await res.json();
-          console.log('Login...', data);
           if (!data.success) {
             throw new Error(data.message);
           }
@@ -64,7 +45,28 @@ export const authOptions = {
           }
           return null;
         }
-
+        if (endPoint === EndPoint.LOGIN) {
+          const requestBody = {
+            email: credentials?.email,
+            password: credentials?.password,
+          };
+          const res = await fetch(
+            `${process.env.API_BASEURL}/${EndPoint.LOGIN}`,
+            {
+              method: 'POST',
+              body: JSON.stringify(requestBody),
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+          const data = await res.json();
+          if (!data.success) {
+            throw new Error(data.message);
+          }
+          if (data.success) {
+            return data.user;
+          }
+          return null;
+        }
       },
     }),
   ],
