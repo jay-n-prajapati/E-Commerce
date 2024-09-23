@@ -22,13 +22,12 @@ export const RecentOrdersColumns = [
         />
       </div>
     ),
-    cell: ({ row, table }) => (
+    cell: ({ row }) => (
       <div>
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            console.log(table.getSelectedRowModel().rows);
           }}
         />
       </div>

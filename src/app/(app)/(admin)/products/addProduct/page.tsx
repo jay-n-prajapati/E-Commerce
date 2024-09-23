@@ -7,7 +7,7 @@ import Heading4 from '@/components/ui/headings/Heading4';
 
 const page = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
         <Link href={'/products'}>
           <Button

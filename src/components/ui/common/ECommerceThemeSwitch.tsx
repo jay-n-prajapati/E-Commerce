@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-export function ThemeSwitch() {
+export function ECommerceThemeSwitch() {
   const { setTheme } = useTheme();
 
   return (

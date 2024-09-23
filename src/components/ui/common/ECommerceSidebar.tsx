@@ -1,29 +1,45 @@
+'use client';
+
 import Link from 'next/link';
 import ECommerceTooltip from './ECommerceTooltip';
 import { NavLinks } from '@/constants/links';
-import Heading4 from '../headings/Heading4';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
+import { Button } from '../button';
 import { Package } from 'lucide-react';
+import ECommerceAvatar from './ECommerceAvatar';
+import { ECommerceThemeSwitch } from './ECommerceThemeSwitch';
 
 const ECommerceSidebar = () => {
+  const pathName = usePathname();
   return (
-    <aside className="h-screen bg-primary-foreground">
-      <div className="flex items-center justify-center py-6">
-        <Heading4 className="rounded-full bg-primary p-2 text-lg text-primary-foreground">
+    <aside className="flex h-screen flex-col gap-6 border-r bg-primary-foreground">
+      <div className="border-b p-2">
+        <Button size={'icon'} className="size-14 rounded-full">
           <Package />
-        </Heading4>
+        </Button>
       </div>
-      <nav className="flex w-16 flex-col items-center justify-center gap-4 py-4">
+      <nav className="flex flex-grow flex-col gap-4 px-4">
         {NavLinks['admin']?.map((link, idx) => (
           <ECommerceTooltip tooltipContent={link.label} key={idx}>
             <Link
               href={link.slug}
-              className="rounded p-2 duration-300 hover:bg-secondary hover:text-primary"
+              className={cn(
+                'rounded p-2 duration-300',
+                pathName === link.slug
+                  ? 'bg-primary text-primary-foreground'
+                  : 'hover:bg-secondary hover:text-primary'
+              )}
             >
               {link.icon}
             </Link>
           </ECommerceTooltip>
         ))}
       </nav>
+      <div className="flex flex-col items-center gap-4 p-4">
+        <ECommerceAvatar src="" username="Admin" />
+        <ECommerceThemeSwitch />
+      </div>
     </aside>
   );
 };

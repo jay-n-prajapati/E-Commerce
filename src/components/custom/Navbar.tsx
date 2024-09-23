@@ -12,9 +12,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { ThemeSwitch } from './ThemeSwitch';
 import Cart from './Cart';
 import { signOut } from 'next-auth/react';
+import { ECommerceThemeSwitch } from '../ui/common/ECommerceThemeSwitch';
 
 const Navbar = () => {
   const { isAuthenticated, user } = useAuthSession();
@@ -63,7 +63,10 @@ const Navbar = () => {
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger className="focus-visible:outline-none focus-visible:ring-0">
-                  <ECommerceAvatar src={user.image!} username={user.name!} />
+                  <ECommerceAvatar
+                    src={user?.image ?? ''}
+                    username={user?.name ?? ''}
+                  />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem>
@@ -81,7 +84,7 @@ const Navbar = () => {
             )}
           </div>
           <div>
-            <ThemeSwitch />
+            <ECommerceThemeSwitch />
           </div>
         </div>
       </div>

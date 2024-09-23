@@ -1,6 +1,4 @@
-import ECommerceSortDropDown from '@/components/ui/common/ECommerceSortDropDown';
 import { createColumnHelper } from '@tanstack/react-table';
-import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { IProduct } from '@/models/product.model';
 import Image from 'next/image';
@@ -25,13 +23,12 @@ export const productsColumns = [
       </div>
     ),
 
-    cell: ({ row, table }) => (
+    cell: ({ row }) => (
       <div>
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => {
             row.toggleSelected(!!value);
-            console.log(table.getSelectedRowModel().rows);
           }}
         />
       </div>
@@ -110,8 +107,7 @@ export const productsColumns = [
   }),
   columnHelper.display({
     header: 'Actions',
-    cell: ({ row }) => <div></div>,
-    sortingFn: 'datetime',
+    // cell: ({ row }) => <div></div>,
     enableHiding: false,
   }),
 ];
