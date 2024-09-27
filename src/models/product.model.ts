@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 export interface IProduct {
+  id: string | mongoose.Schema.Types.ObjectId;
   name: string;
   description: string;
   price: number;
@@ -64,8 +65,24 @@ const productSchema: mongoose.Schema<IProduct> = new mongoose.Schema(
   },
   {
     versionKey: false,
+    toJSON: {
+      virtuals: true, // Include virtuals when converting to JSON
+      transform(doc, ret) {
+        delete ret._id; // Remove the _id field from the response
+      },
+    },
+    toObject: {
+      virtuals: true, // Include virtuals when converting to a plain object
+      transform(doc, ret) {
+        delete ret._id; // Remove the _id field from the response
+      },
+    },
   }
 );
+
+productSchema.virtual('id').get(function () {
+  return this._id;
+});
 
 // Compile the schema into a model
 const Product =

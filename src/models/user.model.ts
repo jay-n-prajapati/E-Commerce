@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import { UserRole } from '@/constants/enums';
 
 export interface IUser {
-  id: mongoose.Schema.Types.ObjectId;
+  id: mongoose.Schema.Types.ObjectId | string;
   name: string;
   email: string;
   password: string;

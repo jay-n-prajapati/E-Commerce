@@ -3,11 +3,11 @@ import { Input } from '../input';
 import ECommerceSortDropDown from './ECommerceSortDropDown';
 import { Column } from '@tanstack/react-table';
 
-const ECommerceTableHeader = ({
+const ECommerceTableHeader = <T, K>({
   column,
   header,
 }: {
-  column: Column<unknown, unknown>;
+  column: Column<T, K>;
   header: string;
 }) => {
   return (

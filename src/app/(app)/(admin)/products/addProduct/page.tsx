@@ -1,9 +1,9 @@
 import React from 'react';
-import AddProduct from './components/AddProduct';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import Heading4 from '@/components/ui/headings/Heading4';
+import ProductForm from '../components/ProductForm';
 
 const page = () => {
   return (
@@ -20,7 +20,18 @@ const page = () => {
         </Link>
         <Heading4 className="font-bold">Create New Product</Heading4>
       </div>
-      <AddProduct />
+      <ProductForm
+        initialValues={{
+          id: '',
+          category: '',
+          description: '',
+          imageUrls: [],
+          name: '',
+          price: 0,
+          stockQuantity: 0,
+          thumbnailUrl: '',
+        }}
+      />
     </div>
   );
 };

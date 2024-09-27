@@ -9,10 +9,7 @@ export default function useCategory(id: string) {
 
   const getCategory = async () => {
     const { data } = await axiosInstance.post<IApiResponse<ICategory>>(
-      '/category/getCategory',
-      {
-        id,
-      }
+      `/category/${id}`
     );
     return data.data;
   };

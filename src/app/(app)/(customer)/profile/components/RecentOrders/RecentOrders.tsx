@@ -166,7 +166,8 @@ const orders = [
 const RecentOrders = () => {
   return (
     <div>
-      <ECommerceTable<Order, any>
+      <ECommerceTable
+        loading={false}
         data={orders as Order[]}
         columns={RecentOrdersColumns}
       />
