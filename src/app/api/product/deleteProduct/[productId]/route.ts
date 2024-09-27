@@ -1,23 +1,26 @@
 import { IApiResponse } from '@/constants/interfaces';
 import { mongoInit } from '@/lib/db/dbConfig';
-import Category, { ICategory } from '@/models/category.model';
+import Product, { IProduct } from '@/models/product.model';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function DELETE(request: NextRequest) {
-  const { id } = await request.json();
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { productId: string } }
+) {
   try {
     mongoInit();
-    const deletedCat = await Category.findByIdAndDelete(id);
+    const deletedCat = await Product.findByIdAndDelete(params.productId);
+
     if (deletedCat) {
-      return NextResponse.json<IApiResponse<ICategory>>({
+      return NextResponse.json<IApiResponse<IProduct>>({
         success: true,
         status: 204,
-        message: 'Category Deleted Successfully',
+        message: 'Product Deleted Successfully',
         data: null,
       });
     }
 
-    return NextResponse.json<IApiResponse<ICategory>>({
+    return NextResponse.json<IApiResponse<IProduct>>({
       success: false,
       status: 400,
       message: 'Something went wrong',
@@ -25,7 +28,7 @@ export async function DELETE(request: NextRequest) {
     });
   } catch (error) {
     console.log({ error });
-    return NextResponse.json<IApiResponse<ICategory>>({
+    return NextResponse.json<IApiResponse<IProduct>>({
       success: false,
       status: 500,
       message: 'Internal Server Error',

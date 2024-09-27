@@ -8,7 +8,7 @@ import { CirclePlus } from 'lucide-react';
 
 const Products = () => {
   return (
-    <div className="flex min-h-full flex-col gap-6 rounded-lg border bg-primary-foreground p-6">
+    <div className="flex h-full flex-col gap-6 rounded-lg border bg-primary-foreground p-6">
       <div className="flex items-center justify-between">
         <div>
           <Heading2 className="font-bold text-primary">Inventory</Heading2>
@@ -22,7 +22,7 @@ const Products = () => {
           </Button>
         </Link>
       </div>
-      <div className="flex-grow">
+      <div className="flex h-full flex-col">
         {/* <NoProducts /> */}
         <ProductManage />
       </div>

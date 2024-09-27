@@ -1,22 +1,30 @@
 'use client';
 
-import React from 'react';
-import useProduct from '../hooks/useProduct';
+import React, { useMemo } from 'react';
+import useProducts from '../hooks/useProducts';
 import ECommerceTable from '@/components/ui/common/ECommerceTable';
-import { productsColumns } from './columns/ProductsColumn';
+import { getProductsColumn } from './columns/ProductsColumn';
 import { IProduct } from '@/models/product.model';
+import { useRouter } from 'next/navigation';
 
 const ProductManage = () => {
-  const { productsData, productsLoading } = useProduct();
+  const router = useRouter();
+
+  const { productsData, productsLoading, deleteProd } = useProducts();
+  const productsColumns = useMemo(() => {
+    return getProductsColumn(
+      (productId) => router.push(`/products/editProduct/${productId}`),
+      async (productId) => await deleteProd(productId),
+      (productId) => router.push(`/product/${productId}`)
+    );
+  }, []);
+
   return (
-    <div className="size-full">
-      <ECommerceTable
-        data={productsData as IProduct[]}
-        columns={productsColumns}
-        loading={productsLoading}
-        containerClassName="min-h-full"
-      />
-    </div>
+    <ECommerceTable
+      data={productsData as IProduct[]}
+      columns={productsColumns}
+      loading={productsLoading}
+    />
   );
 };
 

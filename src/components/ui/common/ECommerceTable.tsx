@@ -41,21 +41,20 @@ import { useState } from 'react';
 import ECommerceColumnVisibilityDropdown from './ECommerceColumnVisibilityDropdown';
 import Heading5 from '../headings/Heading5';
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: ColumnDef<TData, any>[];
   data: TData[];
-  showFooterNavigation: boolean;
-  containerClassName: string;
+  showFooterNavigation?: boolean;
   loading: boolean;
 }
 
-const ECommerceTable = <TData, TValue>({
+const ECommerceTable = <TData,>({
   data,
   columns,
   showFooterNavigation = true,
   loading = false,
-  containerClassName = '',
-}: DataTableProps<TData, TValue>) => {
+}: DataTableProps<TData>) => {
   const [rowSelection, setRowSelection] = useState({});
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
 
@@ -78,7 +77,7 @@ const ECommerceTable = <TData, TValue>({
   });
 
   return (
-    <div className="flex size-full flex-col">
+    <div className="flex h-full w-full flex-col">
       <div className="mb-4 flex gap-4">
         <Input
           placeholder="Search here.."
@@ -86,8 +85,8 @@ const ECommerceTable = <TData, TValue>({
         />
         <ECommerceColumnVisibilityDropdown table={table} />
       </div>
-      <div className="flex flex-col border">
-        <Table containerClassName={containerClassName}>
+      <div className="flex h-full flex-grow flex-col border">
+        <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
@@ -144,12 +143,16 @@ const ECommerceTable = <TData, TValue>({
           </TableBody>
           <TableFooter></TableFooter>
         </Table>
+        {/* Footer navigation */}
         {showFooterNavigation && (
           <div className="flex items-center justify-between border-t p-4">
             <div className="flex items-center gap-2">
               <Heading5 className="text-base">Rows: </Heading5>
               <Select onValueChange={(val) => table.setPageSize(+val)}>
-                <SelectTrigger className="h-8 w-14 border-b border-none bg-secondary p-2 focus:ring-0">
+                <SelectTrigger
+                  className="h-8 w-14 border-b border-none bg-secondary p-2 focus:ring-0"
+                  disabled={table.getRowModel().rows.length <= 5}
+                >
                   <SelectValue
                     placeholder={table.getState().pagination.pageSize}
                   />
@@ -171,7 +174,7 @@ const ECommerceTable = <TData, TValue>({
                 size={'icon'}
                 className="size-fit"
                 variant={'outline'}
-                onClick={() => table.firstPage()}
+                onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}
               >
                 <ChevronsLeft />
@@ -187,7 +190,7 @@ const ECommerceTable = <TData, TValue>({
               </Button>
               <div>
                 <Heading5>
-                  {table.getState().pagination.pageIndex + 1}-
+                  {table.getState().pagination.pageIndex + 1} of{' '}
                   {table.getPageCount()}
                 </Heading5>
               </div>
@@ -204,7 +207,7 @@ const ECommerceTable = <TData, TValue>({
                 size={'icon'}
                 className="size-fit"
                 variant={'outline'}
-                onClick={() => table.lastPage()}
+                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}
               >
                 <ChevronsRight />

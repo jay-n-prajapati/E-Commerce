@@ -3,16 +3,28 @@ import { mongoInit } from '@/lib/db/dbConfig';
 import Category, { ICategory } from '@/models/category.model';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
-  const { id } = await request.json();
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { categoryId: string } }
+) {
   try {
     mongoInit();
-    const category = await Category.findById(id);
+    const deletedCat = await Category.findByIdAndDelete(params.categoryId);
+
+    if (deletedCat) {
+      return NextResponse.json<IApiResponse<ICategory>>({
+        success: true,
+        status: 204,
+        message: 'Category Deleted Successfully',
+        data: null,
+      });
+    }
+
     return NextResponse.json<IApiResponse<ICategory>>({
-      success: true,
-      status: 200,
-      message: '',
-      data: category,
+      success: false,
+      status: 400,
+      message: 'Something went wrong',
+      data: null,
     });
   } catch (error) {
     console.log({ error });

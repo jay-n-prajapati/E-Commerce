@@ -4,10 +4,15 @@ import { IProduct } from '@/models/product.model';
 import Image from 'next/image';
 import moment from 'moment';
 import ECommerceTableHeader from '@/components/ui/common/ECommerceTableHeader';
+import ECommerceTableActionsMenu from '@/components/ui/common/ECommerceTableActionsMenu';
 
 const columnHelper = createColumnHelper<IProduct>();
 
-export const productsColumns = [
+export const getProductsColumn = (
+  handleEdit: (id: string) => void,
+  handleDelete: (id: string) => Promise<boolean>,
+  handleView: (id: string) => void
+) => [
   columnHelper.display({
     id: 'actions',
     header: ({ table }) => (
@@ -107,7 +112,24 @@ export const productsColumns = [
   }),
   columnHelper.display({
     header: 'Actions',
-    // cell: ({ row }) => <div></div>,
+    cell: ({ row }) => {
+      const { id } = row.original;
+      return (
+        <div className="flex items-center justify-center">
+          <ECommerceTableActionsMenu
+            handleDelete={async () => await handleDelete(id.toString())}
+            handleEdit={() => handleEdit(id.toString())}
+          >
+            <div
+              className="cursor-pointer px-2 py-1.5 hover:bg-secondary"
+              onClick={() => handleView(id.toString())}
+            >
+              View
+            </div>
+          </ECommerceTableActionsMenu>
+        </div>
+      );
+    },
     enableHiding: false,
   }),
 ];
