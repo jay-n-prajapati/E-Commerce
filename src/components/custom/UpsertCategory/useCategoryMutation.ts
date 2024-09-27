@@ -1,4 +1,4 @@
-import { queryCLient } from '@/components/providers/QueryClientProvider';
+import { queryClient } from '@/components/providers/QueryClientProvider';
 import { IApiResponse } from '@/constants/interfaces';
 import useCustomToast from '@/hooks/useCustomToast';
 import { axiosInstance } from '@/lib/network';
@@ -34,20 +34,20 @@ const useCategoryMutation = () => {
       },
       onSuccess: (res, { id }) => {
         if (res.success) {
-          const oldCategories = queryCLient.getQueryData<ICategory[]>([
+          const oldCategories = queryClient.getQueryData<ICategory[]>([
             'categories',
           ]);
 
           if (id) {
             // If it's an edit, update the existing category in the cache
-            queryCLient.setQueryData(['categories'], () =>
+            queryClient.setQueryData(['categories'], () =>
               oldCategories?.map((category) =>
                 category.id === id ? res.data : category
               )
             );
           } else {
             // If it's a create, add the new category to the cache
-            queryCLient.setQueryData(['categories'], () => [
+            queryClient.setQueryData(['categories'], () => [
               ...(oldCategories as ICategory[]),
               res.data,
             ]);
@@ -67,7 +67,7 @@ const useCategoryMutation = () => {
       showToast('warn', 'Warning!', res.message);
       return false;
     } else {
-      showToast('success', 'Success!', res.message);
+      showToast('success', 'Success', res.message);
       return true;
     }
   };

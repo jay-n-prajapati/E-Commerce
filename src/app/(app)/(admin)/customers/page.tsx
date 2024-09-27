@@ -10,7 +10,7 @@ const Customers = () => {
   const { data, isLoading } = useCustomers();
   return (
     <>
-      <div className="flex min-h-full flex-col gap-8 border bg-primary-foreground p-6">
+      <div className="flex size-full flex-col gap-8 p-6">
         <div>
           <Heading2 className="mb-1 font-bold">Customers</Heading2>
           <p className="font-medium">

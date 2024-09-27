@@ -22,7 +22,7 @@ export default function Categories() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-4 border p-5 lg:basis-2/5">
+    <div className="flex flex-col gap-4 border p-5 lg:basis-1/2">
       <div className="flex items-center justify-between">
         <Heading5>Categories</Heading5>
         <Link href={'/addCategory'}>

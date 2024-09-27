@@ -1,4 +1,4 @@
-import { queryCLient } from '@/components/providers/QueryClientProvider';
+import { queryClient } from '@/components/providers/QueryClientProvider';
 import { IApiResponse } from '@/constants/interfaces';
 import useCustomToast from '@/hooks/useCustomToast';
 import { axiosInstance } from '@/lib/network';
@@ -38,14 +38,14 @@ export default function useCategories() {
     mutationFn: (id) => deleteCategory(id),
     onSuccess(res, id) {
       if (res.success) {
-        const oldCategories = queryCLient.getQueryData<ICategory[]>([
+        const oldCategories = queryClient.getQueryData<ICategory[]>([
           'categories',
         ]);
 
         const updatedCategoryData = oldCategories?.filter(
           (category) => category.id !== id
         );
-        queryCLient.setQueryData(['categories'], () => updatedCategoryData);
+        queryClient.setQueryData(['categories'], () => updatedCategoryData);
       }
     },
   });
@@ -54,10 +54,10 @@ export default function useCategories() {
     const res = await deleteCategoryMutation(id);
 
     if (!res.success) {
-      showToast('warn', 'Warning', res.message);
+      showToast('warn', 'Warning!', res.message);
       return false;
     } else {
-      showToast('success', 'Success!', res.message);
+      showToast('success', 'Success', res.message);
       return true;
     }
   };

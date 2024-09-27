@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Component() {
   return (
-    <div className="flex min-h-full flex-col gap-8 rounded-t-lg border bg-primary-foreground p-6">
+    <div className="flex size-full flex-col gap-6 p-6">
       <Heading2>Dashboard</Heading2>
       <div className="h-full">
         <DashBoard />

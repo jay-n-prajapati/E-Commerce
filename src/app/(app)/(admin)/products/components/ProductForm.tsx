@@ -29,14 +29,17 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import useProducts from '../hooks/useProducts';
 import { IProduct } from '@/models/product.model';
+import ECommerceMultiSelect from '@/components/ui/common/ECommerceMultiSelect';
 
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
+  brand: z.string().min(2, '* Minimum 2 characters required'),
   description: z
     .string()
     .min(10, '* Minimum 10 characters required')
     .max(30, 'Maximum word limit is 30'),
   category: z.string({ message: '* Category is required' }),
+  tags: z.array(z.string()),
   stockQuantity: z.string(),
   price: z.string(),
   thumbnailUrl: z.string(),
@@ -48,7 +51,8 @@ interface IProps {
 }
 
 export default function ProductForm({ initialValues }: IProps) {
-  const { categoriesData, upsertProductLoading, saveProduct } = useProducts();
+  const { categoriesData, upsertProductLoading, tagData, saveProduct } =
+    useProducts();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof productFormSchema>>({
@@ -72,7 +76,10 @@ export default function ProductForm({ initialValues }: IProps) {
   return (
     <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex-grow">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="relative flex-grow"
+        >
           <div className="grid h-full gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
@@ -88,9 +95,9 @@ export default function ProductForm({ initialValues }: IProps) {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Product Name</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="Product Name" {...field} />
+                          <Input placeholder="eg. Nike shoes" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -101,12 +108,22 @@ export default function ProductForm({ initialValues }: IProps) {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Product Description</FormLabel>
+                        <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea
-                            placeholder="Product Description"
-                            {...field}
-                          />
+                          <Textarea placeholder="Description" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="brand"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Brand</FormLabel>
+                        <FormControl>
+                          <Input placeholder="eg. Nike" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -116,7 +133,105 @@ export default function ProductForm({ initialValues }: IProps) {
               </div>
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
-                  <Heading4 className="font-bold">Product Category</Heading4>
+                  <Heading4 className="font-bold">Product Details</Heading4>
+                  <p className="text-secondary-foreground">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="eg. Nike shoes" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Description" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="brand"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Brand</FormLabel>
+                        <FormControl>
+                          <Input placeholder="eg. Nike" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
+                <div>
+                  <Heading4 className="font-bold">Product Details</Heading4>
+                  <p className="text-secondary-foreground">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="eg. Nike shoes" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea placeholder="Description" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="brand"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Brand</FormLabel>
+                        <FormControl>
+                          <Input placeholder="eg. Nike" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
+                <div>
+                  <Heading4 className="font-bold">Category & Tags</Heading4>
                   <p className="text-secondary-foreground">
                     Lorem ipsum, dolor sit amet consectetur adipisicing.
                   </p>
@@ -169,11 +284,37 @@ export default function ProductForm({ initialValues }: IProps) {
                       </FormItem>
                     )}
                   />
+                  <FormField
+                    control={form.control}
+                    name="tags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Product Tags</FormLabel>
+                        <div className="flex items-center gap-4">
+                          <ECommerceMultiSelect
+                            value={field.value ?? []}
+                            selectItems={tagData ?? []}
+                            placeholder="select tags"
+                            onChange={field.onChange}
+                          />
+                          <Link href={'/addTag'}>
+                            <Button type="button">
+                              <CirclePlus className="size-4" />
+                              Add Tag
+                            </Button>
+                          </Link>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                 </div>
               </div>
+            </div>
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
-                  <Heading4>Stock and Price</Heading4>
+                  <Heading4>Stock & Price</Heading4>
                   <p className="text-secondary-foreground">
                     Lorem ipsum, dolor sit amet consectetur adipisicing.
                   </p>
@@ -211,13 +352,13 @@ export default function ProductForm({ initialValues }: IProps) {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-6">
+
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
                   <Heading4>Product Images</Heading4>
                   <p className="text-secondary-foreground">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
+                    Upload Product Images. (First Image is a Thumbnail of
+                    Product)
                   </p>
                 </div>
                 <div>
@@ -228,22 +369,33 @@ export default function ProductForm({ initialValues }: IProps) {
                     }}
                     initialImages={form.getValues('imageUrls')}
                   />
+
                   <FormMessage className="mt-2">
                     {form.formState.errors.imageUrls &&
                       '* min. 4 images required'}
                   </FormMessage>
                 </div>
               </div>
-              <div className="flex gap-6">
-                <Button
-                  size={'lg'}
-                  type="submit"
-                  isLoading={upsertProductLoading}
-                  disabled={upsertProductLoading}
-                >
-                  Save Product
-                </Button>
-              </div>
+            </div>
+          </div>
+          <div className="sticky bottom-0">
+            <div className="mx-auto flex w-1/3 min-w-fit justify-between rounded-lg border border-primary bg-card p-4">
+              <Button
+                type="reset"
+                isLoading={upsertProductLoading}
+                disabled={upsertProductLoading}
+                variant={'ghost'}
+                onClick={() => form.reset({ ...initialValues })}
+              >
+                Discard
+              </Button>
+              <Button
+                type="submit"
+                isLoading={upsertProductLoading}
+                disabled={upsertProductLoading}
+              >
+                Save Product
+              </Button>
             </div>
           </div>
         </form>

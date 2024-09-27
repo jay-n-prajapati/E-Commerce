@@ -1,9 +1,10 @@
-import { queryCLient } from '@/components/providers/QueryClientProvider';
+import { queryClient } from '@/components/providers/QueryClientProvider';
 import { IApiResponse, ISelectItems } from '@/constants/interfaces';
 import useCustomToast from '@/hooks/useCustomToast';
 import { axiosInstance } from '@/lib/network';
 import { ICategory } from '@/models/category.model';
 import { IProduct } from '@/models/product.model';
+import { ITag } from '@/models/tag.model';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -36,16 +37,38 @@ const useProducts = () => {
     queryFn: getCategories,
   });
 
+  // get all tags
+  const getTags = async () => {
+    const { data } =
+      await axiosInstance.get<IApiResponse<ITag[]>>('/tag/getAllTags');
+    return data.data;
+  };
+
+  const { data: tagData } = useQuery({
+    queryKey: ['tags'],
+    queryFn: getTags,
+  });
+
   const [categories, setCategories] = useState<ISelectItems[]>([]);
+  const [tags, setTags] = useState<ISelectItems[]>([]);
   useEffect(() => {
     if (categoryData) {
       const categoriesData = categoryData.map((category) => ({
         label: category.name,
         value: category.name,
       }));
+
       setCategories(categoriesData);
     }
-  }, [categoryData]);
+
+    if (tagData) {
+      const tagsData = tagData?.map((tag) => ({
+        label: tag.name,
+        value: tag.name,
+      }));
+      setTags(tagsData);
+    }
+  }, [categoryData, tagData]);
 
   // upsertProduct mutation
   const postProduct = async (product: IProduct) => {
@@ -93,7 +116,7 @@ const useProducts = () => {
       showToast('destructive', 'Error!', res?.message);
       return false;
     }
-    showToast('success', 'Success!', res.message);
+    showToast('success', 'Success', res.message);
     return true;
   };
 
@@ -111,12 +134,12 @@ const useProducts = () => {
     mutationFn: (id: string) => deleteProduct(id),
     onSuccess(res, id) {
       if (res.success) {
-        const oldProducts = queryCLient.getQueryData<IProduct[]>(['products']);
+        const oldProducts = queryClient.getQueryData<IProduct[]>(['products']);
 
         const updatedProductsData = oldProducts?.filter(
           (product) => product.id !== id
         );
-        queryCLient.setQueryData(['products'], () => updatedProductsData);
+        queryClient.setQueryData(['products'], () => updatedProductsData);
       }
     },
   });
@@ -124,15 +147,16 @@ const useProducts = () => {
   const deleteProd = async (id: string) => {
     const res = await deleteProductMutation(id);
     if (!res.success) {
-      showToast('warn', 'Warning', res.message);
+      showToast('warn', 'Warning!', res.message);
       return false;
     } else {
-      showToast('success', 'Success!', res.message);
+      showToast('success', 'Success', res.message);
       return true;
     }
   };
 
   return {
+    tagData: tags,
     categoriesData: categories,
     productsData: productsData ?? [],
     productsLoading,

@@ -6,7 +6,7 @@ import React from 'react';
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      suspense: true,
+      // suspense: true,
     },
   },
 });

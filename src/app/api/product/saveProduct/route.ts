@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.log({ error });
-    return NextResponse.json<IApiResponse<IProduct>>({
+    return NextResponse.json<IApiResponse<null>>({
       status: 500,
       success: false,
       message: 'Internal server error',
