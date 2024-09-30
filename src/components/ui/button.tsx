@@ -3,7 +3,6 @@ import { Slot } from '@radix-ui/react-slot';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 import { cn } from '@/lib/utils';
-import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { Loader2 } from 'lucide-react';
 
 const buttonVariants = cva(

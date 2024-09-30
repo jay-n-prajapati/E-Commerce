@@ -1,9 +1,9 @@
 'use client';
 
-import useTag from './useTag';
 import { useRouter } from 'next/navigation';
 import ECommerceModal from '@/components/ui/common/ECommerceModal';
 import UpsertTagForm from '@/components/custom/UpsertTag/UpsertTagForm';
+import useTag from './useTag';
 
 export default function Page({ params }: { params: { id: string } }) {
   const { tagData } = useTag(params.id);

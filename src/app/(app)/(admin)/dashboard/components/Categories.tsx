@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 
 export default function Categories() {
   const router = useRouter();
-  const { categoriesData, categoriesDataLoading, deleteCat } = useCategories();
+  const { categories, categoriesLoading, deleteCat } = useCategories();
 
   const columns = useMemo(() => {
     return getCategoryColumns(
@@ -34,9 +34,9 @@ export default function Categories() {
       </div>
       <div className="flex-grow">
         <ECommerceTable
-          data={categoriesData ?? []}
+          data={categories ?? []}
           columns={columns}
-          loading={categoriesDataLoading}
+          loading={categoriesLoading}
         />
       </div>
     </div>

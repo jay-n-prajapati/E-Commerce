@@ -1,39 +1,94 @@
-import { Home, Package2, ShoppingCart, Users2 } from 'lucide-react';
-import { UserRole } from './enums';
+import {
+  Home,
+  LayoutDashboard,
+  LogIn,
+  Package2,
+  PackageSearch,
+  ShoppingCart,
+  User,
+  Users2,
+} from 'lucide-react';
+
+import { ReactNode } from 'react';
 
 export type LinkItem = {
   label: string;
   slug: string;
-  icon?: React.ReactNode;
+  icon?: (username?: string, image?: string) => ReactNode;
+  visible?: (isAuthenticated: boolean, userRole?: string) => boolean;
 };
+
+enum LinkType {
+  SideBar = 'SideBar',
+  Menubar = 'MenuBar',
+}
 
 /** Links Type in which key must be of one of the UserRole */
 export type Links = {
-  [key in UserRole]?: LinkItem[];
+  [key in LinkType]: LinkItem[];
 };
 
 export const NavLinks: Links = {
-  admin: [
+  SideBar: [
     {
       label: 'dashboard',
       slug: '/dashboard',
-      icon: <Home />,
+      icon: () => <Home />,
     },
     {
       label: 'customers',
-      slug: '/customers',
-      icon: <Users2 />,
+      slug: '/dashboard/customers',
+      icon: () => <Users2 />,
     },
     {
       label: 'products',
-      slug: '/products',
-      icon: <Package2 />,
+      slug: '/dashboard/products',
+      icon: () => <Package2 />,
     },
     {
       label: 'orders',
-      slug: '/orders',
-      icon: <ShoppingCart />,
+      slug: '/dashboard/orders',
+      icon: () => <ShoppingCart />,
     },
   ],
-  customer: [],
+  MenuBar: [
+    {
+      label: 'Home',
+      slug: '/',
+      icon: () => <Home />,
+      visible: () => true,
+    },
+    {
+      label: 'Products',
+      slug: '/products',
+      icon: () => <PackageSearch />,
+      visible: () => true,
+    },
+    {
+      label: 'Cart',
+      slug: '/cart',
+      icon: () => <ShoppingCart />,
+      visible: () => true,
+    },
+    {
+      label: 'Dashboard',
+      slug: '/dashboard',
+      icon: () => <LayoutDashboard />,
+      visible: (isAuthenticated, userRole) =>
+        isAuthenticated && userRole! === 'admin',
+    },
+
+    {
+      label: 'Login',
+      slug: '/login',
+      icon: () => <LogIn />,
+      visible: (isAuthenticated) => !isAuthenticated,
+    },
+    {
+      label: 'Profile',
+      slug: '/profile',
+      icon: () => <User />,
+      visible: (isAuthenticated) => isAuthenticated,
+    },
+  ],
 };

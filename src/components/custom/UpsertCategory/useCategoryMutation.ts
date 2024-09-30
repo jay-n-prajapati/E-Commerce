@@ -1,32 +1,17 @@
-import { queryClient } from '@/components/providers/QueryClientProvider';
-import { IApiResponse } from '@/constants/interfaces';
+import { queryClient } from '@/providers/QueryClientProvider';
 import useCustomToast from '@/hooks/useCustomToast';
-import { axiosInstance } from '@/lib/network';
 import { ICategory } from '@/models/category.model';
 import { useMutation } from '@tanstack/react-query';
+import {
+  createCategory,
+  editCategory,
+} from '@/lib/network/services/categories';
 
 const useCategoryMutation = () => {
   const { showToast } = useCustomToast();
 
-  const createCategory = async (name: string, slug: string) => {
-    const { data } = await axiosInstance.post('/category/addCategory', {
-      name,
-      slug,
-    });
-    return data;
-  };
-
-  const editCategory = async (id: string, name: string, slug: string) => {
-    const { data } = await axiosInstance.patch('/category/editCategory', {
-      id,
-      name,
-      slug,
-    });
-    return data;
-  };
-
   const { mutateAsync: upsertCategory, isPending: upsertCategoryLoading } =
-    useMutation<IApiResponse<ICategory>, unknown, ICategory>({
+    useMutation({
       mutationFn: ({ id, name, slug }: ICategory) => {
         // Check if the operation is for edit or create
         if (id) return editCategory(id as string, name, slug);

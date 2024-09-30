@@ -10,10 +10,10 @@ import {
 } from '../dropdown-menu';
 import { Table } from '@tanstack/react-table';
 
-const ECommerceColumnVisibilityDropdown = ({
+const ECommerceColumnVisibilityDropdown = <T,>({
   table,
 }: {
-  table: Table<any>;
+  table: Table<T>;
 }) => {
   return (
     <DropdownMenu>

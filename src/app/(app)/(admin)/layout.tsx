@@ -11,7 +11,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
         </div>
         <div className="size-full overflow-y-auto bg-secondary p-6">
           <Suspense fallback={<Loading />}>
-            <div className="container flex min-h-full bg-primary-foreground">
+            <div className="container h-full min-h-full bg-primary-foreground">
               {children}
             </div>
           </Suspense>

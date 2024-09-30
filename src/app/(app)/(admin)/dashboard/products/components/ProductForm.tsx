@@ -27,19 +27,18 @@ import { CirclePlus } from 'lucide-react';
 import ECommerceImageUpload from '@/components/ui/common/ECommerceImageUpload';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import useProducts from '../hooks/useProducts';
-import { IProduct } from '@/models/product.model';
 import ECommerceMultiSelect from '@/components/ui/common/ECommerceMultiSelect';
+import useProductsMutation from '../hooks/useProductsMutation';
 
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
   brand: z.string().min(2, '* Minimum 2 characters required'),
-  description: z
-    .string()
-    .min(10, '* Minimum 10 characters required')
-    .max(30, 'Maximum word limit is 30'),
+  description: z.string().min(10, '* Minimum 10 characters required'),
   category: z.string({ message: '* Category is required' }),
-  tags: z.array(z.string()),
+  tags: z
+    .array(z.string())
+    .min(1, 'At least 1 tag is required')
+    .max(4, 'No more than 4 tags are allowed'),
   stockQuantity: z.string(),
   price: z.string(),
   thumbnailUrl: z.string(),
@@ -47,12 +46,12 @@ const productFormSchema = z.object({
 });
 
 interface IProps {
-  initialValues: IProduct;
+  initialValues: z.infer<typeof productFormSchema> & { id?: string };
 }
 
 export default function ProductForm({ initialValues }: IProps) {
-  const { categoriesData, upsertProductLoading, tagData, saveProduct } =
-    useProducts();
+  const { saveProduct, upsertProductLoading, categoriesData, tagData } =
+    useProductsMutation();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof productFormSchema>>({
@@ -66,7 +65,7 @@ export default function ProductForm({ initialValues }: IProps) {
       ...data,
       price: +data.price,
       stockQuantity: +data.stockQuantity,
-      id: initialValues.id,
+      id: initialValues.id as string,
     });
     if (res) {
       router.push('/products');
@@ -131,104 +130,49 @@ export default function ProductForm({ initialValues }: IProps) {
                   />
                 </div>
               </div>
+
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
-                  <Heading4 className="font-bold">Product Details</Heading4>
+                  <Heading4>Stock & Price</Heading4>
                   <p className="text-secondary-foreground">
                     Lorem ipsum, dolor sit amet consectetur adipisicing.
                   </p>
                 </div>
-                <div className="flex flex-col gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="eg. Nike shoes" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Description" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="brand"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Brand</FormLabel>
-                        <FormControl>
-                          <Input placeholder="eg. Nike" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="flex flex-col gap-6 sm:flex-row">
+                  <div className="sm:basis-1/2">
+                    <FormField
+                      control={form.control}
+                      name="stockQuantity"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Stock</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Product Stock" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="sm:basis-1/2">
+                    <FormField
+                      control={form.control}
+                      name="price"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Price</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Product Price" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
               </div>
-              <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
-                <div>
-                  <Heading4 className="font-bold">Product Details</Heading4>
-                  <p className="text-secondary-foreground">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input placeholder="eg. Nike shoes" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea placeholder="Description" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="brand"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Brand</FormLabel>
-                        <FormControl>
-                          <Input placeholder="eg. Nike" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              </div>
+            </div>
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
                   <Heading4 className="font-bold">Category & Tags</Heading4>
@@ -310,49 +254,6 @@ export default function ProductForm({ initialValues }: IProps) {
                   />
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
-                <div>
-                  <Heading4>Stock & Price</Heading4>
-                  <p className="text-secondary-foreground">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing.
-                  </p>
-                </div>
-                <div className="flex flex-col gap-6 sm:flex-row">
-                  <div className="sm:basis-1/2">
-                    <FormField
-                      control={form.control}
-                      name="stockQuantity"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Stock</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Product Stock" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div className="sm:basis-1/2">
-                    <FormField
-                      control={form.control}
-                      name="price"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Price</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Product Price" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
               <div className="flex flex-col gap-4 rounded-lg border bg-primary-foreground p-8">
                 <div>
                   <Heading4>Product Images</Heading4>
@@ -382,8 +283,6 @@ export default function ProductForm({ initialValues }: IProps) {
             <div className="mx-auto flex w-1/3 min-w-fit justify-between rounded-lg border border-primary bg-card p-4">
               <Button
                 type="reset"
-                isLoading={upsertProductLoading}
-                disabled={upsertProductLoading}
                 variant={'ghost'}
                 onClick={() => form.reset({ ...initialValues })}
               >

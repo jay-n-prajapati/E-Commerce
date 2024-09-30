@@ -1,6 +1,6 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
-import useProduct from '../../../(admin)/products/hooks/useProduct';
+import useProduct from '../../../(admin)/dashboard/products/hooks/useProduct';
 import ProductImages from '../components/ProductImages';
 import Heading5 from '@/components/ui/headings/Heading5';
 import Heading3 from '@/components/ui/headings/Heading3';
@@ -9,6 +9,8 @@ import { Heart, Minus, Plus, ShoppingCart } from 'lucide-react';
 
 const ProductDetail = ({ params }: { params: { productId: string } }) => {
   const { productData } = useProduct(params.productId);
+
+  console.log(productData?.tags);
 
   return (
     <div className="size-full">
@@ -28,18 +30,24 @@ const ProductDetail = ({ params }: { params: { productId: string } }) => {
               <Heading5 className="mb-1">About Product:</Heading5>
               <p className="text-pretty font-normal text-secondary-foreground">
                 {productData?.description}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis magnam repellat cupiditate obcaecati illum dolores
-                optio, assumenda molestias quam fugit, error eveniet dolorum
-                nam! Quasi atque cupiditate odit impedit earum veniam eligendi
-                voluptatum debitis repellendus aliquam, nemo sequi fugiat
-                cumque.
               </p>
             </div>
-            <p className="flex gap-2 text-lg font-medium text-secondary-foreground">
+
+            <div className="flex flex-wrap gap-2">
+              {productData?.tags.map((tag, idx) => (
+                <Badge variant={'secondary'} key={idx}>
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+            <div className="flex gap-2 text-lg font-medium text-secondary-foreground">
               <span>Category:</span>
               <Badge className="w-fit">{productData?.category}</Badge>
-            </p>
+            </div>
+            <div className="flex gap-2 text-lg font-medium text-secondary-foreground">
+              <span>Brand:</span>
+              <span className="text-primary">{productData?.brand}</span>
+            </div>
             <div className="flex flex-col gap-2">
               <p className="text-lg font-medium text-secondary-foreground">
                 Price:

@@ -1,24 +1,11 @@
-import { queryClient } from '@/components/providers/QueryClientProvider';
-import { IApiResponse } from '@/constants/interfaces';
+import { queryClient } from '@/providers/QueryClientProvider';
 import useCustomToast from '@/hooks/useCustomToast';
-import { axiosInstance } from '@/lib/network';
 import { ITag } from '@/models/tag.model';
 import { useMutation } from '@tanstack/react-query';
+import { saveTag } from '@/lib/network/services/tags';
 
 export default function useTagsMutation() {
   const { showToast } = useCustomToast();
-  const saveTag = async (name: string, description: string, id?: string) => {
-    const { data } = await axiosInstance.post<IApiResponse<ITag>>(
-      '/tag/saveTag',
-      {
-        id,
-        name,
-        description,
-      }
-    );
-
-    return data;
-  };
 
   const { mutateAsync: upsertTagMutation, isPending: upsertTagLoading } =
     useMutation({
@@ -27,7 +14,6 @@ export default function useTagsMutation() {
       onSuccess(res, { id }) {
         if (res.success) {
           const oldTags = queryClient.getQueryData<ITag[]>(['tags']) ?? [];
-          console.log({ id });
 
           if (id) {
             queryClient.setQueryData(['tags'], () =>

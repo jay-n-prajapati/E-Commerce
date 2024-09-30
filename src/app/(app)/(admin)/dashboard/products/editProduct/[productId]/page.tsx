@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { productId: string } }) {
 
   return (
     <Suspense>
-      <div className="flex h-full flex-col gap-4">
+      <div className="flex h-full flex-col gap-4 bg-secondary">
         <div className="flex items-center gap-4">
           <Link href={'/products'}>
             <Button
@@ -27,7 +27,21 @@ export default function Page({ params }: { params: { productId: string } }) {
           <Heading4 className="font-bold">Edit Product</Heading4>
         </div>
 
-        <ProductForm initialValues={productData!} key={productData?.name} />
+        <ProductForm
+          initialValues={{
+            id: productData?.id as string,
+            name: productData?.name as string,
+            description: productData?.description as string,
+            brand: productData?.brand as string,
+            category: productData?.category as string,
+            imageUrls: productData?.imageUrls as string[],
+            price: productData?.price.toString() as string,
+            stockQuantity: productData?.stockQuantity.toString() as string,
+            tags: productData?.tags as string[],
+            thumbnailUrl: productData?.thumbnailUrl as string,
+          }}
+          key={productData?.name}
+        />
       </div>
     </Suspense>
   );

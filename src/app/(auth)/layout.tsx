@@ -1,7 +1,7 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
-const layout = ({ children }: { children: React.ReactNode }) => {
-  return <div className='h-screen w-full'>{children}</div>;
+const AuthLayout = ({ children }: { children: ReactNode }) => {
+  return <div className="h-screen w-full">{children}</div>;
 };
 
-export default layout;
+export default AuthLayout;

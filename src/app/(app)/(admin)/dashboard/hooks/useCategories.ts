@@ -1,41 +1,20 @@
-import { queryClient } from '@/components/providers/QueryClientProvider';
-import { IApiResponse } from '@/constants/interfaces';
+import { queryClient } from '@/providers/QueryClientProvider';
 import useCustomToast from '@/hooks/useCustomToast';
-import { axiosInstance } from '@/lib/network';
 import { ICategory } from '@/models/category.model';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import useAppData from '@/hooks/useAppData';
+import { deleteCategory } from '@/lib/network/services/categories';
 
 export default function useCategories() {
   const { showToast } = useCustomToast();
-
-  // get all categories
-  const getCategories = async () => {
-    const { data } = await axiosInstance.get('/category/getAllCategory');
-    return data.data;
-  };
-
-  const { data: categoriesData, isLoading: categoriesDataLoading } = useQuery<
-    IApiResponse<ICategory[]>,
-    unknown,
-    ICategory[]
-  >({
-    queryKey: ['categories'],
-    queryFn: getCategories,
-  });
+  const { categories, categoriesLoading } = useAppData();
 
   // delete Category
-  const deleteCategory = async (id: string) => {
-    const { data } = await axiosInstance.delete(
-      `/category/deleteCategory/${id}`
-    );
-    return data;
-  };
-
   const {
     mutateAsync: deleteCategoryMutation,
     isPending: deleteCategoryLoading,
-  } = useMutation<IApiResponse<ICategory>, unknown, string>({
-    mutationFn: (id) => deleteCategory(id),
+  } = useMutation({
+    mutationFn: (id: string) => deleteCategory(id),
     onSuccess(res, id) {
       if (res.success) {
         const oldCategories = queryClient.getQueryData<ICategory[]>([
@@ -52,7 +31,6 @@ export default function useCategories() {
 
   const deleteCat = async (id: string) => {
     const res = await deleteCategoryMutation(id);
-
     if (!res.success) {
       showToast('warn', 'Warning!', res.message);
       return false;
@@ -63,8 +41,8 @@ export default function useCategories() {
   };
 
   return {
-    categoriesData,
-    categoriesDataLoading,
+    categories,
+    categoriesLoading,
     deleteCategoryLoading,
     deleteCat,
   };

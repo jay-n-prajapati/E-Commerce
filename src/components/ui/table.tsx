@@ -6,6 +6,7 @@ const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
+  // h-96
   <div className="relative h-96 w-full flex-grow overflow-auto scrollbar-thin">
     <table
       ref={ref}

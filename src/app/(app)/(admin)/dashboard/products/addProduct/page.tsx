@@ -7,7 +7,7 @@ import ProductForm from '../components/ProductForm';
 
 const page = () => {
   return (
-    <div className="flex flex-grow flex-col gap-4 bg-secondary">
+    <div className="flex h-full flex-col gap-4 bg-secondary">
       <div className="flex items-center gap-4">
         <Link href={'/products'}>
           <Button
@@ -24,12 +24,13 @@ const page = () => {
         initialValues={{
           id: '',
           category: '',
+          brand: '',
           description: '',
           imageUrls: [],
           tags: [],
           name: '',
-          price: 0,
-          stockQuantity: 0,
+          price: '0',
+          stockQuantity: '0',
           thumbnailUrl: '',
         }}
       />

@@ -14,13 +14,13 @@ const ECommerceSidebar = () => {
   const pathName = usePathname();
   return (
     <aside className="flex h-screen flex-col gap-6 border-r bg-primary-foreground">
-      <div className="border-b p-2">
+      <Link href={'/'} className="border-b p-2">
         <Button size={'icon'} className="size-14 rounded-full">
           <Package />
         </Button>
-      </div>
+      </Link>
       <nav className="flex flex-grow flex-col gap-4 px-4">
-        {NavLinks['admin']?.map((link, idx) => (
+        {NavLinks['SideBar']?.map((link, idx) => (
           <ECommerceTooltip tooltipContent={link.label} key={idx}>
             <Link
               href={link.slug}
@@ -31,7 +31,7 @@ const ECommerceSidebar = () => {
                   : 'hover:bg-secondary hover:text-primary'
               )}
             >
-              {link.icon}
+              {link.icon && link.icon()}
             </Link>
           </ECommerceTooltip>
         ))}

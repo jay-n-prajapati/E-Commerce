@@ -1,6 +1,5 @@
 import type { NextRequest } from 'next/server';
 import { getToken, JWT } from 'next-auth/jwt';
-import { hasAccessToURL } from './lib/utils';
 import { UserRole } from './constants/enums';
 
 export type Token = JWT & {
