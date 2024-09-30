@@ -7,7 +7,7 @@ const CustomerLayout = ({ children }: { children: ReactNode }) => {
     <div>
       <Navbar />
       <Suspense fallback={<Loading />}>
-        <div className="container mx-auto h-screen px-4 pt-24">{children}</div>
+        <div className="container mx-auto size-full px-4 pt-24">{children}</div>
       </Suspense>
     </div>
   );

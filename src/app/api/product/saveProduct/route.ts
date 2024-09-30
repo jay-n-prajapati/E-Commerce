@@ -10,16 +10,21 @@ export async function POST(request: NextRequest) {
       id,
       name,
       description,
+      brand,
       price,
       imageUrls,
       thumbnailUrl,
       category,
+      tags,
       stockQuantity,
     } = await request.json();
+
+    console.log({ brand });
 
     if (
       !name ||
       !description ||
+      !brand ||
       !imageUrls ||
       !thumbnailUrl ||
       !category ||
@@ -71,10 +76,12 @@ export async function POST(request: NextRequest) {
     const productData = {
       name,
       description,
+      brand,
       price,
       imageUrls,
       thumbnailUrl,
       category,
+      tags,
       stockQuantity,
     };
 
@@ -98,7 +105,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.log({ error });
-    return NextResponse.json<IApiResponse<IProduct>>({
+    return NextResponse.json<IApiResponse<null>>({
       status: 500,
       success: false,
       message: 'Internal server error',

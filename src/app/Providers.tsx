@@ -1,6 +1,6 @@
-import QueryClientProviderWrapper from '@/components/providers/QueryClientProvider';
-import SessionProviderWrapper from '@/components/providers/SessionProvideWrapper';
-import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import QueryClientProviderWrapper from '@/providers/QueryClientProvider';
+import SessionProviderWrapper from '@/providers/SessionProvideWrapper';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 import { getServerSession } from 'next-auth';
 import React from 'react';
 

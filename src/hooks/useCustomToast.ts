@@ -4,7 +4,7 @@ const useCustomToast = () => {
   const { toast } = useToast();
   const showToast = (
     variant: 'default' | 'success' | 'warn' | 'destructive' = 'default',
-    title: string = 'this is toast',
+    title: 'Success' | 'Warning!' | 'Error!' | 'Info' = 'Success',
     description: string = 'this is description'
   ) => {
     toast({

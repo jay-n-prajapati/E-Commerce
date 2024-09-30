@@ -26,7 +26,7 @@ export default function UpsertCategoryForm({
   const { saveCategory, upsertCategoryLoading } = useCategoryMutation();
 
   const handleSaveCategory = async (name: string, slug: string) => {
-    const res = await saveCategory(name, slug, initialValues.id);
+    const res = await saveCategory(name, slug, initialValues.id!);
     if (res) closeModal();
   };
 

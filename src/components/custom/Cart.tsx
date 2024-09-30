@@ -9,11 +9,14 @@ import {
   SheetTrigger,
 } from '../ui/sheet';
 import { Button } from '../ui/button';
+import { ShoppingBag } from 'lucide-react';
 
-const Cart = ({ children }: { children: React.ReactNode }) => {
+const Cart = () => {
   return (
     <Sheet>
-      <SheetTrigger>{children}</SheetTrigger>
+      <SheetTrigger>
+        <ShoppingBag />
+      </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Cart</SheetTitle>
@@ -22,7 +25,7 @@ const Cart = ({ children }: { children: React.ReactNode }) => {
             quam.
           </SheetDescription>
         </SheetHeader>
-        
+
         <SheetFooter>
           <Button>Confirm Order</Button>
         </SheetFooter>

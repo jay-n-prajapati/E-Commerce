@@ -28,10 +28,10 @@ export default function Login() {
     });
 
     if (res?.error) {
-      showToast('destructive', 'Login Error', res.error);
+      showToast('destructive', 'Error!', res.error);
     } else {
       router.replace('/');
-      showToast('success', 'Login Success', 'Successfully Logged In');
+      showToast('success', 'Success', 'Successfully Logged In');
     }
   };
 

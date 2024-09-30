@@ -12,7 +12,7 @@ export async function DELETE(
     const deletedCat = await Category.findByIdAndDelete(params.categoryId);
 
     if (deletedCat) {
-      return NextResponse.json<IApiResponse<ICategory>>({
+      return NextResponse.json<IApiResponse<null>>({
         success: true,
         status: 204,
         message: 'Category Deleted Successfully',
@@ -20,7 +20,7 @@ export async function DELETE(
       });
     }
 
-    return NextResponse.json<IApiResponse<ICategory>>({
+    return NextResponse.json<IApiResponse<null>>({
       success: false,
       status: 400,
       message: 'Something went wrong',

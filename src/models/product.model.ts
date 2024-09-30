@@ -3,11 +3,13 @@ import mongoose from 'mongoose';
 export interface IProduct {
   id: string | mongoose.Schema.Types.ObjectId;
   name: string;
+  brand: string;
   description: string;
   price: number;
   imageUrls: string[];
   thumbnailUrl: string;
   category: string;
+  tags: string[];
   stockQuantity: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -21,6 +23,10 @@ const productSchema: mongoose.Schema<IProduct> = new mongoose.Schema(
       required: true,
     },
     description: {
+      type: String,
+      required: true,
+    },
+    brand: {
       type: String,
       required: true,
     },
@@ -40,14 +46,13 @@ const productSchema: mongoose.Schema<IProduct> = new mongoose.Schema(
     thumbnailUrl: {
       type: String,
       required: true,
-      validate: {
-        validator: (v: string) => this?.imageUrls.includes(v), // Validate thumbnailUrl exists in imageUrls
-        message: 'Thumbnail URL must be one of the provided image URLs.',
-      },
     },
     category: {
       type: String,
       required: true,
+    },
+    tags: {
+      type: [String],
     },
     stockQuantity: {
       type: Number,
