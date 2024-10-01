@@ -5,7 +5,27 @@ type PrivateRouteConfig = {
 };
 
 export const PrivateRoutes: PrivateRouteConfig = {
-  [UserRole.ADMIN]: ['/dashboard'],
-  [UserRole.CUSTOMER]: ['/profile', '/wishlist', '/cart'],
+  [UserRole.CUSTOMER]: ['/profile', '/wishlist'],
+  [UserRole.ADMIN]: [
+    '/profile',
+    '/wishlist',
+    '/dashboard',
+    '/dashboard/products',
+    '/dashboard/orders',
+    '/dashboard/customers',
+    '/dashboard/products/addProduct',
+    '/dashboard/products/editProduct/[id]',
+    '/addCategory',
+    '/editCategory',
+    '/addTag',
+    '/editTag',
+  ],
 };
-export const PublicRoutes: string[] = ['/access-denied', '/', '/login'];
+export const PublicRoutes: string[] = [
+  '/',
+  '/products',
+  '/product/[id]',
+  '/cart',
+  '/login',
+  '/signup',
+];

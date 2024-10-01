@@ -1,16 +1,14 @@
 'use client';
 import { Badge } from '@/components/ui/badge';
-import useProduct from '../../../(admin)/dashboard/products/hooks/useProduct';
 import ProductImages from '../components/ProductImages';
 import Heading5 from '@/components/ui/headings/Heading5';
 import Heading3 from '@/components/ui/headings/Heading3';
 import { Button } from '@/components/ui/button';
 import { Heart, Minus, Plus, ShoppingCart } from 'lucide-react';
+import useProduct from '@/app/(app)/(admin)/dashboard/products/hooks/useProduct';
 
 const ProductDetail = ({ params }: { params: { productId: string } }) => {
   const { productData } = useProduct(params.productId);
-
-  console.log(productData?.tags);
 
   return (
     <div className="size-full">
@@ -51,12 +49,12 @@ const ProductDetail = ({ params }: { params: { productId: string } }) => {
             <div className="flex flex-col gap-2">
               <p className="text-lg font-medium text-secondary-foreground">
                 Price:
-                <span className="text-primary">$ {productData?.price}</span>
+                <span className="text-primary"> $ {productData?.price}</span>
               </p>
               <p className="text-lg font-medium text-secondary-foreground">
                 Available Stock:
                 <span className="text-primary">
-                  $ {productData?.stockQuantity}
+                  {productData?.stockQuantity}
                 </span>
               </p>
             </div>

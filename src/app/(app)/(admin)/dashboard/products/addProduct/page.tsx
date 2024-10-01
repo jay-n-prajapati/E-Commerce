@@ -9,7 +9,7 @@ const page = () => {
   return (
     <div className="flex h-full flex-col gap-4 bg-secondary">
       <div className="flex items-center gap-4">
-        <Link href={'/products'}>
+        <Link href={'/dashboard/products'}>
           <Button
             size={'icon'}
             variant={'outline'}

@@ -15,13 +15,6 @@ import { z } from 'zod';
 import Heading4 from '@/components/ui/headings/Heading4';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
 import ECommerceImageUpload from '@/components/ui/common/ECommerceImageUpload';
@@ -29,6 +22,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ECommerceMultiSelect from '@/components/ui/common/ECommerceMultiSelect';
 import useProductsMutation from '../hooks/useProductsMutation';
+import ECommerceSelect from '@/components/ui/common/ECommerceSelect';
 
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
@@ -61,6 +55,8 @@ export default function ProductForm({ initialValues }: IProps) {
   });
 
   const onSubmit = async (data: z.infer<typeof productFormSchema>) => {
+    console.log({ data });
+
     const res = await saveProduct({
       ...data,
       price: +data.price,
@@ -68,7 +64,7 @@ export default function ProductForm({ initialValues }: IProps) {
       id: initialValues.id as string,
     });
     if (res) {
-      router.push('/products');
+      router.push('/dashboard/products');
     }
   };
 
@@ -188,35 +184,17 @@ export default function ProductForm({ initialValues }: IProps) {
                       <FormItem>
                         <FormLabel>Product Category</FormLabel>
                         <div className="flex items-center gap-4">
-                          <Select
-                            onValueChange={(value) =>
-                              form.setValue('category', value)
-                            }
-                          >
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue
-                                  placeholder={
-                                    field.value
-                                      ? field.value
-                                      : 'Select Category'
-                                  }
-                                  defaultValue={field.value}
-                                />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              {categoriesData?.map((item, idx) => (
-                                <SelectItem
-                                  key={idx}
-                                  value={String(item.value)}
-                                  className="capitalize"
-                                >
-                                  {item.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <FormControl>
+                            <ECommerceSelect
+                              value={field.value}
+                              onChange={(value) =>
+                                form.setValue('category', value)
+                              }
+                              placeholder="Select Category"
+                              selectItems={categoriesData}
+                            />
+                          </FormControl>
+
                           <Link href={'/addCategory'}>
                             <Button type="button">
                               <CirclePlus className="size-4" />
