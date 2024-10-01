@@ -4,7 +4,7 @@ import Tag, { ITag } from '@/models/tag.model';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { tagId: string } }
 ) {
   try {

@@ -13,7 +13,7 @@ import { ISelectItems } from '@/constants/interfaces';
 interface IProps {
   placeholder?: string;
   value: string[];
-  onChange: (value: string[]) => void;
+  onChange: (_value: string[]) => void;
   selectItems: ISelectItems[];
 }
 

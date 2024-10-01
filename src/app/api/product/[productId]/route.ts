@@ -5,7 +5,7 @@ import { NextApiRequest } from 'next';
 import { NextResponse } from 'next/server';
 
 export async function GET(
-  request: NextApiRequest,
+  _request: NextApiRequest,
   { params }: { params: { productId: string } }
 ) {
   try {
@@ -27,6 +27,8 @@ export async function GET(
       data: product,
     });
   } catch (error) {
+    console.log({ error });
+
     return NextResponse.json<IApiResponse<IProduct>>({
       status: 500,
       success: false,

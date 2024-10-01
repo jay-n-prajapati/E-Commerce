@@ -17,7 +17,7 @@ type FileObj = {
 };
 
 interface IProps {
-  onChange: (urls: string[]) => void;
+  onChange: (_urls: string[]) => void;
   maxImages?: number;
   isMultipart?: boolean;
   initialImages?: string[];
@@ -105,11 +105,11 @@ const ECommerceImageUpload = ({
 
           return updatedFiles;
         });
-        showToast('success', 'Hurray!', 'Image Uploaded Successfully');
+        showToast('success', 'Success', 'Image Uploaded Successfully');
       }
     } catch (error) {
       console.error({ error });
-      showToast('destructive', 'Oops!', 'Something Went Wrong');
+      showToast('destructive', 'Error!', 'Something Went Wrong');
       setFiles((prevFiles) =>
         prevFiles.map((f, idx) =>
           idx === index ? { ...f, loading: false } : f

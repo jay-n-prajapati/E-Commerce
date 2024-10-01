@@ -1,7 +1,7 @@
 import { UserRole } from './enums';
 
 type PrivateRouteConfig = {
-  [key in UserRole]: string[];
+  [_key in UserRole]: string[];
 };
 
 export const PrivateRoutes: PrivateRouteConfig = {

@@ -28,7 +28,16 @@ module.exports = {
     // JavaScript rules
     'prefer-const': 'warn',
     'no-var': 'warn',
-    'no-unused-vars': 'warn',
+    'no-unused-vars': [
+      'warn',
+      {
+        vars: 'all',
+        args: 'all',
+        caughtErrors: 'all',
+        argsIgnorePattern: '^_', // to explicitly ignore type-only args
+        varsIgnorePattern: '^_', // to explicitly ignore type-only vars
+      },
+    ],
     'object-shorthand': 'warn',
     'quote-props': ['warn', 'as-needed'],
     // TypeScript rules
@@ -53,6 +62,7 @@ module.exports = {
         extensions: ['ts', 'tsx'],
       },
     ],
+
     'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
     'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
     'react/react-in-jsx-scope': 'off',

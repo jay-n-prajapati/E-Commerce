@@ -9,9 +9,9 @@ import ECommerceTableActionsMenu from '@/components/ui/common/ECommerceTableActi
 const columnHelper = createColumnHelper<IProduct>();
 
 export const getProductsColumn = (
-  handleEdit: (id: string) => void,
-  handleDelete: (id: string) => Promise<boolean>,
-  handleView: (id: string) => void
+  handleEdit: (_id: string) => void,
+  handleDelete: (_id: string) => Promise<boolean>,
+  handleView: (_id: string) => void
 ) => [
   columnHelper.display({
     id: 'actions',
