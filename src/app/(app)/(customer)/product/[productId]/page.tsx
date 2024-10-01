@@ -18,7 +18,7 @@ const ProductDetail = ({ params }: { params: { productId: string } }) => {
         </div>
         <div className="flex flex-grow items-center lg:basis-1/2">
           <div className="flex flex-col gap-4 lg:px-6">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <Heading3>{productData?.name}</Heading3>
               <Button size={'icon'} className="p-4">
                 <Heart strokeWidth={1} />

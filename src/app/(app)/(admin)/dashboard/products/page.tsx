@@ -1,22 +1,19 @@
 import React from 'react';
-// import NoProducts from './components/NoProducts';
 import ProductManage from './components/ProductManage';
-import Heading2 from '@/components/ui/headings/Heading2';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { CirclePlus } from 'lucide-react';
+import ECommerceDashboardPageHeader from '@/components/ui/common/ECommerceDashboardPageHeader';
 // import NoProducts from './components/NoProducts';
 
 const Products = () => {
   return (
     <div className="flex h-full flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
-        <div>
-          <Heading2 className="font-bold text-primary">Inventory</Heading2>
-          <p className="font-medium">
-            Manage your Products and view their details.
-          </p>
-        </div>
+        <ECommerceDashboardPageHeader
+          title="Products"
+          descriptions="Manage your Products here"
+        />
         <Link href={'/dashboard/products/addProduct'}>
           <Button className="font-bold">
             <CirclePlus className="size-5" /> Add Product

@@ -4,19 +4,17 @@ import ECommerceTable from '@/components/ui/common/ECommerceTable';
 import React from 'react';
 import useCustomers from './hooks/useCustomers';
 import { CustomersColumns } from './components/CustomersColumn';
-import Heading2 from '@/components/ui/headings/Heading2';
+import ECommerceDashboardPageHeader from '@/components/ui/common/ECommerceDashboardPageHeader';
 
 const Customers = () => {
   const { data, isLoading } = useCustomers();
   return (
     <>
-      <div className="flex size-full flex-col gap-8 p-6">
-        <div>
-          <Heading2 className="mb-1 font-bold">Customers</Heading2>
-          <p className="font-medium">
-            Manage your Customers and view their details.
-          </p>
-        </div>
+      <div className="flex h-full flex-col gap-8 p-6">
+        <ECommerceDashboardPageHeader
+          title="Customers"
+          descriptions="Manage your users here"
+        />
         <div className="flex-grow">
           <ECommerceTable
             data={data}

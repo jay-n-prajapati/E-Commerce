@@ -28,6 +28,8 @@ export default function ProductImages({ urlData }: IProps) {
                   alt="Product Image"
                   fill
                   className="object-contain"
+                  placeholder="blur"
+                  blurDataURL="/public/images/placeholder-image.webp"
                 />
               </CarouselItem>
             ))}
@@ -46,6 +48,8 @@ export default function ProductImages({ urlData }: IProps) {
               alt="Product Image"
               fill
               className="rounded-lg object-contain"
+              placeholder="blur"
+              blurDataURL="/public/images/placeholder-image.webp"
             />
           </div>
         ))}

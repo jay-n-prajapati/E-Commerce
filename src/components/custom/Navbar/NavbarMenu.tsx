@@ -23,7 +23,7 @@ export default function NavbarMenu() {
         <Menu className="size-6" />
       </SheetTrigger>
       <SheetContent side={'left'}>
-        <div className="flex flex-col py-6">
+        <div className="flex flex-col py-8">
           {NavLinks['MenuBar']?.map((link, idx) => {
             if (link.visible!(isAuthenticated, role)) {
               return (
@@ -31,7 +31,7 @@ export default function NavbarMenu() {
                   <Link
                     href={link.slug}
                     className={cn(
-                      'flex cursor-pointer items-center gap-4 rounded p-4 text-lg font-semibold transition-all duration-300',
+                      'flex cursor-pointer items-center gap-4 rounded p-3 text-lg font-semibold transition-all duration-300',
                       pathname === link.slug
                         ? 'bg-primary text-primary-foreground'
                         : 'hover:bg-secondary hover:text-secondary-foreground'

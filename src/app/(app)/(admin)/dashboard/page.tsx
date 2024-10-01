@@ -1,11 +1,14 @@
-import Heading2 from '@/components/ui/headings/Heading2';
 import DashBoard from './components/DashBoard';
 import React from 'react';
+import ECommerceDashboardPageHeader from '@/components/ui/common/ECommerceDashboardPageHeader';
 
 export default function Component() {
   return (
-    <div className="flex size-full flex-col gap-6 p-6">
-      <Heading2>Dashboard</Heading2>
+    <div className="flex min-h-full flex-col gap-6 p-6">
+      <ECommerceDashboardPageHeader
+        title="Dashboard"
+        descriptions="Manage your Tags and Categories here"
+      />{' '}
       <div className="h-full">
         <DashBoard />
       </div>
