@@ -4,7 +4,7 @@ import Category, { ICategory } from '@/models/category.model';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { categoryId: string } }
 ) {
   try {

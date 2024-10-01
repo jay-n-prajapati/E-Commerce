@@ -17,7 +17,7 @@ const Products = () => {
             Manage your Products and view their details.
           </p>
         </div>
-        <Link href={'/products/addProduct'}>
+        <Link href={'/dashboard/products/addProduct'}>
           <Button className="font-bold">
             <CirclePlus className="size-5" /> Add Product
           </Button>

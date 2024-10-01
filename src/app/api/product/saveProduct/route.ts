@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
       !imageUrls ||
       !thumbnailUrl ||
       !category ||
-      price == null ||
-      stockQuantity == null
+      price === null ||
+      stockQuantity === null
     ) {
       return NextResponse.json<IApiResponse<IProduct>>({
         status: 400,

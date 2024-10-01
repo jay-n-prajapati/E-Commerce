@@ -4,7 +4,7 @@ import Tag from '@/models/tag.model';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { tagId: string } }
 ) {
   try {
@@ -29,6 +29,8 @@ export async function DELETE(
       data: null,
     });
   } catch (error) {
+    console.log({ error });
+
     return NextResponse.json<IApiResponse<null>>({
       status: 500,
       success: false,

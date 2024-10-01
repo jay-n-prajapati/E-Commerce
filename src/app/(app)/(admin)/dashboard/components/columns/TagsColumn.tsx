@@ -6,8 +6,8 @@ import { createColumnHelper } from '@tanstack/react-table';
 const columnHelper = createColumnHelper<ITag>();
 
 export const getTagsColumn = (
-  handleDelete: (id: string) => Promise<boolean>,
-  handleEdit: (id: string) => void
+  handleDelete: (_id: string) => Promise<boolean>,
+  handleEdit: (_id: string) => void
 ) => [
   columnHelper.accessor('name', {
     header: ({ column }) => (

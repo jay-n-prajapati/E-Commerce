@@ -27,13 +27,13 @@ const tagSchema = new mongoose.Schema<ITag>(
     versionKey: false,
     toJSON: {
       virtuals: true, // Include virtuals when converting to JSON
-      transform(doc, ret) {
+      transform(_doc, ret) {
         delete ret._id; // Remove _id field from the response
       },
     },
     toObject: {
       virtuals: true, // Include virtuals when converting to a plain object
-      transform(doc, ret) {
+      transform(_doc, ret) {
         delete ret._id; // Remove _id field from the response
       },
     },

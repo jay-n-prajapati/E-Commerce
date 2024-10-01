@@ -6,8 +6,8 @@ import { createColumnHelper } from '@tanstack/react-table';
 const columnHelper = createColumnHelper<ICategory>();
 
 export const getCategoryColumns = (
-  handleEdit: (id: string) => void,
-  handleDelete: (id: string) => Promise<boolean>
+  handleEdit: (_id: string) => void,
+  handleDelete: (_id: string) => Promise<boolean>
 ) => [
   columnHelper.accessor('name', {
     header: ({ column }) => {
@@ -31,10 +31,9 @@ export const getCategoryColumns = (
     cell: ({ row }) => {
       const { id } = row.original;
       return (
-        <ECommerceTableActionsMenu<ICategory>
+        <ECommerceTableActionsMenu
           handleDelete={() => handleDelete(id.toString())}
           handleEdit={() => handleEdit(id.toString())}
-          rowData={row.original}
         />
       );
     },

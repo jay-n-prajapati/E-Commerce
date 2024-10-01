@@ -11,7 +11,7 @@ import {
 import { Input } from '../input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import { z, ZodSchema } from 'zod';
 import {
   Select,
   SelectContent,
@@ -26,7 +26,7 @@ import { ISelectItems } from '@/constants/interfaces';
 
 type syncWithObj<T> = {
   syncWithKey: keyof T;
-  transformFunction?: (value: string) => string;
+  transformFunction?: (_value: string) => string;
 };
 
 export type ECommerceFormElement<T> = {
@@ -48,6 +48,15 @@ export type ECommerceFormElement<T> = {
   description?: string;
 };
 
+type ECommerceFormProps<T> = {
+  className?: string;
+  formSchema: ZodSchema;
+  initialValues: T;
+  onSubmit: (_data: T) => void;
+  elements: ECommerceFormElement<T>[];
+  children: React.ReactNode;
+};
+
 export function ECommerceForm<T>({
   className,
   formSchema,
@@ -55,14 +64,7 @@ export function ECommerceForm<T>({
   onSubmit,
   elements,
   children,
-}: {
-  className?: string;
-  formSchema: any;
-  initialValues: T;
-  onSubmit: (data: T) => void;
-  elements: ECommerceFormElement<T>[];
-  children: React.ReactNode;
-}) {
+}: ECommerceFormProps<T>) {
   const [showPass, setShowPass] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -121,8 +123,8 @@ export function ECommerceForm<T>({
                       </FormControl>
                       <SelectContent>
                         {ele.selectItems?.map((item, idx) => (
-                          <SelectItem key={idx} value={item}>
-                            {item}
+                          <SelectItem key={idx} value={item.value}>
+                            {item.label}
                           </SelectItem>
                         ))}
                       </SelectContent>

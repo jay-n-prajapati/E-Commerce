@@ -14,8 +14,8 @@ import { ReactNode } from 'react';
 export type LinkItem = {
   label: string;
   slug: string;
-  icon?: (username?: string, image?: string) => ReactNode;
-  visible?: (isAuthenticated: boolean, userRole?: string) => boolean;
+  icon?: (_username?: string, _image?: string) => ReactNode;
+  visible?: (_isAuthenticated: boolean, _userRole?: string) => boolean;
 };
 
 enum LinkType {
@@ -25,7 +25,7 @@ enum LinkType {
 
 /** Links Type in which key must be of one of the UserRole */
 export type Links = {
-  [key in LinkType]: LinkItem[];
+  [_key in LinkType]: LinkItem[];
 };
 
 export const NavLinks: Links = {

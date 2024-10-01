@@ -38,10 +38,15 @@ export default function ProductImages({ urlData }: IProps) {
         {urlData.map((url, index) => (
           <div
             key={index}
-            className={`relative aspect-square cursor-pointer lg:aspect-auto lg:size-full`}
+            className={`relative aspect-square cursor-pointer border border-primary lg:aspect-auto`}
             onClick={() => api?.scrollTo(index)}
           >
-            <Image src={url} alt="Product Image" fill className="rounded-lg" />
+            <Image
+              src={url}
+              alt="Product Image"
+              fill
+              className="rounded-lg object-contain"
+            />
           </div>
         ))}
       </div>
