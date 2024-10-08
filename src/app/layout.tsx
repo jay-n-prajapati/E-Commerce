@@ -22,11 +22,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body
-          className={`${manrope.className} h-screen w-screen overflow-x-hidden`}
-        >
-          <ReactQueryDevtools initialIsOpen={false} /> <Toaster />
-          <main className="size-full">{children}</main>
+        <body className={`${manrope.className} overflow-x-hidden`}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Toaster />
+          {children}
           {modals}
         </body>
       </Providers>

@@ -4,7 +4,7 @@ import { IProduct } from '@/models/product.model';
 
 export const getProducts = async () => {
   const { data } = await axiosInstance.get<IApiResponse<IProduct[]>>(
-    '/product/getAllProduct'
+    '/products/getAllProduct'
   );
   return data.data;
 };
@@ -12,7 +12,7 @@ export const getProducts = async () => {
 export const getProduct = async (productId: string) => {
   try {
     const { data } = await axiosInstance.get<IApiResponse<IProduct>>(
-      `/product/${productId}`
+      `/products/${productId}`
     );
     return data.data;
   } catch (error) {
@@ -36,7 +36,7 @@ export const postProduct = async (product: IProduct) => {
     } = product;
 
     const { data } = await axiosInstance.post<IApiResponse<IProduct>>(
-      '/product/saveProduct',
+      '/products/saveProduct',
       {
         id,
         name,
@@ -60,7 +60,7 @@ export const postProduct = async (product: IProduct) => {
 
 export const deleteProduct = async (id: string) => {
   const { data } = await axiosInstance.delete<IApiResponse<IProduct>>(
-    `/product/deleteProduct/${id}`
+    `/products/deleteProduct/${id}`
   );
   return data;
 };

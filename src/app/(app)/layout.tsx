@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 const AppLayout = ({ children }: { children: ReactNode }) => {
   return (
     <AppDataProvider>
-      <div className="h-screen w-full">{children}</div>
+      <div className="h-screen w-screen">{children}</div>
     </AppDataProvider>
   );
 };

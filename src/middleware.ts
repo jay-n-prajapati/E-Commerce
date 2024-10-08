@@ -15,28 +15,41 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
+  // Helper function to check if a route matches either a string or RegExp
+  const isRouteMatch = (routes: (string | RegExp)[], path: string) => {
+    return routes.some((route) => {
+      if (typeof route === 'string') {
+        return path === route; // Exact match for string routes
+      } else if (route instanceof RegExp) {
+        return route.test(path); // Match using RegExp
+      }
+      return false;
+    });
+  };
+
   // 1. Check if the route is a public route
-  if (PublicRoutes.some((route) => pathname.startsWith(route))) return; // Public route, allow access
+  if (isRouteMatch(PublicRoutes, pathname)) return; // Public route, allow access
 
   // 2. If not a public route, check if the user is authenticated (has a token)
   if (!token) {
-    // If unauthenticated, redirect to login page unless the user is already there
-    if (pathname !== '/login')
+    if (pathname !== '/login') {
       return Response.redirect(new URL('/login', request.nextUrl));
-
+    }
     return; // Allow access to login page if unauthenticated
   }
 
   // 3. If authenticated, prevent access to login/signup pages
-  if (token && (pathname === '/login' || pathname === '/signup'))
+  if (token && (pathname === '/login' || pathname === '/signup')) {
     return Response.redirect(new URL('/', request.nextUrl));
+  }
 
   // 4. Check if the route is private and if the user has access based on their role
-  const userRoleRoutes = PrivateRoutes[token.role] || []; // Get the routes for the user's role
+  const userRoleRoutes = PrivateRoutes[token.role] || [];
 
   // 5. Redirect if the user doesn't have access to the private route
-  if (!userRoleRoutes.some((route) => pathname.startsWith(route)))
-    return Response.redirect(new URL('/', request.nextUrl)); // Redirect to homepage or another "no access" page
+  if (!isRouteMatch(userRoleRoutes, pathname)) {
+    return Response.redirect(new URL('/', request.nextUrl)); // Redirect to homepage or "no access" page
+  }
 }
 
 export const config = {

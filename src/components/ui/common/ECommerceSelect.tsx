@@ -1,3 +1,5 @@
+'use client';
+
 import { ISelectItems } from '@/constants/interfaces';
 import {
   Select,
@@ -18,7 +20,7 @@ interface IProps {
 export default function ECommerceSelect({
   value,
   placeholder,
-  selectItems,
+  selectItems = [],
   className,
   onChange,
 }: IProps) {
@@ -29,7 +31,11 @@ export default function ECommerceSelect({
       </SelectTrigger>
       <SelectContent>
         {selectItems.map((item) => (
-          <SelectItem value={item.value} key={item.value}>
+          <SelectItem
+            value={item.value}
+            key={item.value}
+            className="capitalize"
+          >
             {item.label}
           </SelectItem>
         ))}

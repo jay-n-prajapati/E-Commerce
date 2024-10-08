@@ -60,7 +60,7 @@ export const NavLinks: Links = {
     },
     {
       label: 'Products',
-      slug: '/products',
+      slug: '/products?page=1&limit=10',
       icon: () => <PackageSearch />,
       visible: () => true,
     },

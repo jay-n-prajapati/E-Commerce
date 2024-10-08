@@ -18,7 +18,7 @@ export default function useProductsMutation() {
     if (categoryData) {
       const categoriesData = categoryData.map((category) => ({
         label: category.name,
-        value: category.name,
+        value: category.slug,
       }));
 
       setCategories(categoriesData);

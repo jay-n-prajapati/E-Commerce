@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
       status: 201,
       user: savedUser,
     });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json({
       success: false,
       message: error.message,
