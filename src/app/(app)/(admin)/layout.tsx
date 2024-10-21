@@ -2,23 +2,19 @@ import Loading from '@/app/loading';
 import ECommerceSidebar from '@/components/ui/common/ECommerceSidebar';
 import React, { Suspense } from 'react';
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      <div className="flex size-full">
-        <div className="sticky left-0 top-0">
-          <ECommerceSidebar />
-        </div>
-        <div className="size-full min-h-full overflow-y-auto bg-secondary p-6">
-          <Suspense fallback={<Loading />}>
-            <div className="container h-full min-h-full bg-primary-foreground">
-              {children}
-            </div>
-          </Suspense>
+    <div className="flex h-full w-full bg-secondary">
+      <div className="sticky left-0 top-0 h-full">
+        <ECommerceSidebar />
+      </div>
+      <div className="flex-grow overflow-y-auto p-4">
+        <div className="container flex min-h-full flex-col gap-4 bg-primary-foreground p-6">
+          <Suspense fallback={<Loading />}>{children}</Suspense>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default layout;
+export default Layout;

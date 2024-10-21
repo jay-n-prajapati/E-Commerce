@@ -9,7 +9,7 @@ import React from 'react';
 const NotFound = () => {
   const router = useRouter();
   return (
-    <div className="flex size-full items-center justify-center p-4">
+    <div className="flex h-screen w-full items-center justify-center p-4">
       <div className="flex flex-col gap-8">
         <Image
           src={'/images/404.svg'}

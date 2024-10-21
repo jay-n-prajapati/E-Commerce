@@ -28,24 +28,22 @@ export default function ECommerceBreadCrumbs() {
         {paths.map((path, idx) => {
           const href = `/${paths.slice(0, idx + 1).join('/')}`;
           return (
-            <>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
-                  <Link
-                    href={href}
-                    className={cn(
-                      'capitalize',
-                      href === pathname ? 'font-bold text-primary' : ''
-                    )}
-                  >
-                    {path}
-                  </Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
+            <BreadcrumbItem key={href} className="flex items-center">
+              <BreadcrumbLink asChild>
+                <Link
+                  href={href}
+                  className={cn(
+                    'capitalize',
+                    href === pathname ? 'font-bold text-primary' : ''
+                  )}
+                >
+                  {path}
+                </Link>
+              </BreadcrumbLink>
               {idx + 1 === paths.length || paths.length === 1 ? null : (
                 <BreadcrumbSeparator />
               )}
-            </>
+            </BreadcrumbItem>
           );
         })}
       </BreadcrumbList>

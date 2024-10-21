@@ -4,14 +4,16 @@ import ECommerceDashboardPageHeader from '@/components/ui/common/ECommerceDashbo
 
 export default function Component() {
   return (
-    <div className="flex min-h-full flex-col gap-6 p-6">
+    // <div className="flex min-h-full flex-col gap-6 p-6">
+    <>
       <ECommerceDashboardPageHeader
         title="Dashboard"
         descriptions="Manage your Tags and Categories here"
-      />{' '}
-      <div className="h-full">
+      />
+      <div className="flex-grow">
         <DashBoard />
       </div>
-    </div>
+    </>
+    // </div>
   );
 }

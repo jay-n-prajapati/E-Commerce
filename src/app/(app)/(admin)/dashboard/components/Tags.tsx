@@ -20,7 +20,7 @@ export default function Tags() {
         async (id) => await handleDeleteTag(id),
         (id) => router.push(`/editTag/${id}`)
       ),
-    []
+    [handleDeleteTag, router]
   );
 
   return (

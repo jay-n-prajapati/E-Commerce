@@ -23,7 +23,7 @@ export default function Login() {
   const handleLogin = async (e: z.infer<typeof LoginFormSchema>) => {
     const res = await signIn('credentials', {
       ...e,
-      type: EndPoint.LOGIN,
+      endPoint: EndPoint.LOGIN,
       redirect: false,
     });
 
@@ -83,7 +83,7 @@ export default function Login() {
                   placeholder: 'Enter your password',
                 },
               ]}
-              initialValues={{}}
+              initialValues={{ email: '', password: '' }}
             >
               <div>
                 <Button type="submit" size={'lg'} className="w-full">
