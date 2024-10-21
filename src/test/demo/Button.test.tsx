@@ -9,6 +9,5 @@ describe('button component', () => {
     expect(
       screen.getByRole('button', { name: /click me/i })
     ).toBeInTheDocument();
-    screen.debug();
   });
 });
