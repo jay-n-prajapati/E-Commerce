@@ -66,7 +66,9 @@ const Button = React.forwardRef<
         disabled={isLoading}
         {...props}
       >
-        {isLoading && <Loader2 className="mr-2 size-4 animate-spin" />}
+        {isLoading && (
+          <Loader2 className="mr-2 size-4 animate-spin" aria-label="Loader" />
+        )}
         <div className="inline-flex items-center justify-center gap-2">
           {children}
         </div>

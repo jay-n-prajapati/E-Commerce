@@ -19,7 +19,7 @@ export default function Categories() {
       (id) => router.push(`/editCategory/${id}`),
       async (id) => await deleteCat(id)
     );
-  }, []);
+  }, [deleteCat, router]);
 
   return (
     <div className="flex flex-col gap-4 border p-5 lg:basis-1/2">

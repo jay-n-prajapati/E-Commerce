@@ -36,5 +36,6 @@ export const getTagsColumn = (
         </div>
       );
     },
+    enableHiding: false,
   }),
 ];

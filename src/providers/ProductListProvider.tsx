@@ -81,6 +81,7 @@ export default function ProductListProvider({
   }, [debouncedSearch, debouncedMinPrice, debouncedMaxPrice, filters, router]);
 
   // Update max price from the API response
+
   useEffect(() => {
     if (productsData?.maxPrice) {
       setFilters((prev) => ({

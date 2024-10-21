@@ -1,13 +1,13 @@
 import { mongoInit } from '@/lib/db/dbConfig';
 import User from '@/models/user.model';
-import NextAuth from 'next-auth';
+import NextAuth, { SessionStrategy } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { EndPoint } from '@/constants/enums';
 
 export const authOptions = {
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as SessionStrategy,
     maxAge: 24 * 60 * 60, // 1 day in seconds
   },
   jwt: {
@@ -15,12 +15,12 @@ export const authOptions = {
   },
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     CredentialsProvider({
       async authorize(credentials) {
-        const endPoint = credentials.type;
+        const endPoint = credentials?.endPoint;
 
         if (endPoint === EndPoint.SIGNUP) {
           const requestBody = {
@@ -68,6 +68,11 @@ export const authOptions = {
           return null;
         }
       },
+      credentials: {
+        email: { label: 'Email', type: 'text', placeholder: 'you@example.com' },
+        password: { label: 'Password', type: 'password' },
+        username: { label: 'Username', type: 'text' },
+      },
     }),
   ],
   callbacks: {
@@ -88,7 +93,7 @@ export const authOptions = {
     },
     async jwt({ token }) {
       const user = await User.findOne({ email: token.email });
-      token.role = user.role;
+      token.role = user?.role;
       return token;
     },
     async session({ session, token }) {

@@ -21,7 +21,7 @@ const ECommerceSidebar = () => {
       </Link>
       <nav className="flex flex-grow flex-col gap-4 px-4">
         {NavLinks['SideBar']?.map((link, idx) => (
-          <ECommerceTooltip tooltipContent={link.label} key={idx}>
+          <ECommerceTooltip tooltipContent={link.label} key={idx} side="right">
             <Link
               href={link.slug}
               className={cn(

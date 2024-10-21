@@ -77,7 +77,7 @@ const ECommerceTable = <TData,>({
   });
 
   return (
-    <div className="flex h-full w-full flex-col">
+    <div className="flex size-full flex-col">
       <div className="mb-4 flex gap-4">
         <Input
           placeholder="Search here.."
@@ -151,7 +151,7 @@ const ECommerceTable = <TData,>({
               <Select onValueChange={(val) => table.setPageSize(+val)}>
                 <SelectTrigger
                   className="h-8 w-14 border-b border-none bg-secondary p-2 focus:ring-0"
-                  disabled={table.getRowModel().rows.length <= 5}
+                  disabled={data.length <= 5}
                 >
                   <SelectValue
                     placeholder={table.getState().pagination.pageSize}

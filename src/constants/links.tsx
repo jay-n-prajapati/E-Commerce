@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 import { ReactNode } from 'react';
+import { LinkType } from './enums';
 
 export type LinkItem = {
   label: string;
@@ -17,11 +18,6 @@ export type LinkItem = {
   icon?: (_username?: string, _image?: string) => ReactNode;
   visible?: (_isAuthenticated: boolean, _userRole?: string) => boolean;
 };
-
-enum LinkType {
-  SideBar = 'SideBar',
-  Menubar = 'MenuBar',
-}
 
 /** Links Type in which key must be of one of the UserRole */
 export type Links = {

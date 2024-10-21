@@ -13,7 +13,7 @@ export default function Page({ params }: { params: { productId: string } }) {
 
   return (
     <Suspense>
-      <div className="flex h-full flex-col gap-4 bg-secondary">
+      <div className="flex h-full flex-col gap-4">
         <div className="flex items-center gap-4">
           <Link href={'/dashboard/products'}>
             <Button

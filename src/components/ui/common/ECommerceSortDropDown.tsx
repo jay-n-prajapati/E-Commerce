@@ -7,7 +7,7 @@ import {
 import { Column } from '@tanstack/react-table';
 import { EllipsisVertical } from 'lucide-react';
 
-const ECommerceSortDropDown = ({ column }: { column: Column<any, any> }) => {
+const ECommerceSortDropDown = <T,>({ column }: { column: Column<T, T> }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">

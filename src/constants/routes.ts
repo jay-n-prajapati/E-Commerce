@@ -25,8 +25,8 @@ export const PrivateRoutes: PrivateRouteConfig = {
     '/dashboard/products/addProduct',
     /^\/dashboard\/products\/editProduct\/.*$/, // Matches /dashboard/products/editProduct/123
     '/addCategory',
-    '/editCategory',
+    /^\/editCategory\/.*$/,
     '/addTag',
-    '/editTag',
+    /^\/editTag\/.*$/,
   ],
 };

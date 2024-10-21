@@ -24,6 +24,10 @@ import ECommerceMultiSelect from '@/components/ui/common/ECommerceMultiSelect';
 import useProductsMutation from '../hooks/useProductsMutation';
 import ECommerceSelect from '@/components/ui/common/ECommerceSelect';
 
+interface IProps {
+  initialValues: z.infer<typeof productFormSchema> & { id?: string };
+}
+
 const productFormSchema = z.object({
   name: z.string().min(3, '* Minimum 3 characters required'),
   brand: z.string().min(2, '* Minimum 2 characters required'),
@@ -38,10 +42,6 @@ const productFormSchema = z.object({
   thumbnailUrl: z.string(),
   imageUrls: z.array(z.string()).length(4, '* min. 4 images required'),
 });
-
-interface IProps {
-  initialValues: z.infer<typeof productFormSchema> & { id?: string };
-}
 
 export default function ProductForm({ initialValues }: IProps) {
   const { saveProduct, upsertProductLoading, categoriesData, tagData } =
@@ -257,26 +257,29 @@ export default function ProductForm({ initialValues }: IProps) {
               </div>
             </div>
           </div>
-          <div className="sticky bottom-0">
-            <div className="mx-auto flex w-1/3 min-w-fit justify-between rounded-lg border border-primary bg-card p-4">
-              <Button
-                type="reset"
-                variant={'ghost'}
-                onClick={() => form.reset({ ...initialValues })}
-              >
-                Discard
-              </Button>
-              <Button
-                type="submit"
-                isLoading={upsertProductLoading}
-                disabled={upsertProductLoading}
-              >
-                Save Product
-              </Button>
-            </div>
-          </div>
         </form>
       </Form>
+      <div className="sticky bottom-0">
+        <div className="mx-auto flex w-1/3 min-w-fit justify-between rounded-lg border border-primary bg-card p-4">
+          <Button
+            type="reset"
+            variant={'ghost'}
+            onClick={() => form.reset({ ...initialValues })}
+          >
+            Discard
+          </Button>
+          <Button
+            type="submit"
+            isLoading={upsertProductLoading}
+            disabled={
+              upsertProductLoading ||
+              !(form.formState.isDirty && form.formState.isValid)
+            }
+          >
+            Save Product
+          </Button>
+        </div>
+      </div>
     </>
   );
 }

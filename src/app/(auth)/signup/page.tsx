@@ -14,7 +14,7 @@ const passwordValidation = new RegExp(
   /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 );
 
-const SignupFormSchema = z
+const SignUpFormSchema = z
   .object({
     username: z.string().min(3, ' min. 3 characters required'),
     email: z.string().email('Email is required'),
@@ -35,18 +35,18 @@ export default function Signup() {
   const { showToast } = useCustomToast();
   const router = useRouter();
 
-  const handleSignUp = async (e: z.infer<typeof SignupFormSchema>) => {
+  const handleSignUp = async (e: z.infer<typeof SignUpFormSchema>) => {
     const res = await signIn('credentials', {
       ...e,
-      type: 'signup',
+      endPoint: 'signup',
       redirect: false,
     });
 
     if (res?.error) {
-      showToast('destructive', 'Sign Up Error', res.error);
+      showToast('warn', 'Warning!', res.error);
     } else {
       router.replace('/');
-      showToast('success', 'Login Success', 'User Registered Successfully');
+      showToast('success', 'Success', 'User Registered Successfully');
     }
   };
 
@@ -80,9 +80,9 @@ export default function Signup() {
               <span className="mx-4">OR</span>
               <hr className="w-full" />
             </div>
-            <ECommerceForm<z.infer<typeof SignupFormSchema>>
+            <ECommerceForm<z.infer<typeof SignUpFormSchema>>
               onSubmit={handleSignUp}
-              formSchema={SignupFormSchema}
+              formSchema={SignUpFormSchema}
               className="w-full"
               elements={[
                 {
@@ -110,7 +110,12 @@ export default function Signup() {
                   placeholder: 'Enter your password',
                 },
               ]}
-              initialValues={{}}
+              initialValues={{
+                email: '',
+                username: '',
+                cpassword: '',
+                password: '',
+              }}
             >
               <div>
                 <Button type="submit" size={'lg'} className="w-full">

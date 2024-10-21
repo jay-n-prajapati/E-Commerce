@@ -9,15 +9,23 @@ import {
 const ECommerceTooltip = ({
   children,
   tooltipContent = 'tooltip',
+  side = 'top',
+  align = 'center',
 }: {
   children: React.ReactNode;
   tooltipContent?: string;
+  side?: 'left' | 'right' | 'top' | 'bottom';
+  align?: 'center' | 'end' | 'start';
 }) => {
   return (
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent className="z-[10000] rounded-lg">
+        <TooltipContent
+          className="z-[10000] rounded-lg"
+          side={side}
+          align={align}
+        >
           <p className="capitalize">{tooltipContent}</p>
         </TooltipContent>
       </Tooltip>

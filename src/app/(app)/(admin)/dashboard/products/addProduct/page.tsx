@@ -7,7 +7,7 @@ import ProductForm from '../components/ProductForm';
 
 const page = () => {
   return (
-    <div className="flex h-full flex-col gap-4 bg-secondary">
+    <div className="flex flex-grow flex-col gap-4">
       <div className="flex items-center gap-4">
         <Link href={'/dashboard/products'}>
           <Button

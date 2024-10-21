@@ -22,7 +22,7 @@ export default function NavbarMenu() {
       <SheetTrigger>
         <Menu className="size-6" />
       </SheetTrigger>
-      <SheetContent side={'left'}>
+      <SheetContent side={'right'}>
         <div className="flex flex-col py-8">
           {NavLinks['MenuBar']?.map((link, idx) => {
             if (link.visible!(isAuthenticated, role)) {
