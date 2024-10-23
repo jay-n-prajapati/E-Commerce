@@ -6,11 +6,11 @@ import {
   AccordionTrigger,
 } from '../accordion';
 
+export type ItemValue = `item-${number}`;
+
 interface ECommerceAccordionProps {
-  type: 'single' | 'multiple';
-  collapsible?: boolean;
   accordionItems: { triggerText: string; content: ReactNode }[];
-  defaultValue: string[];
+  defaultValue?: ItemValue[];
 }
 
 export default function ECommerceAccordion({

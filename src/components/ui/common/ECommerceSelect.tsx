@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '../select';
 
-interface IProps {
+interface ECommerceSelectProps {
   value: string;
   placeholder: string;
   selectItems: ISelectItems[];
@@ -23,11 +23,11 @@ export default function ECommerceSelect({
   selectItems = [],
   className,
   onChange,
-}: IProps) {
+}: ECommerceSelectProps) {
   return (
     <Select value={value} onValueChange={(value) => onChange(value)}>
       <SelectTrigger className={className}>
-        <SelectValue placeholder={value ? value : placeholder} />
+        <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
         {selectItems.map((item) => (
