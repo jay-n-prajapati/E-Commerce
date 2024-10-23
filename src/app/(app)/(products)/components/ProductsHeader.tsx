@@ -8,7 +8,7 @@ import useProductsList from '@/hooks/useProductsList';
 
 export default function ProductsHeader() {
   const {
-    filters: { search },
+    filters: { search, sort },
     updateFilters,
   } = useProductsList();
 
@@ -22,7 +22,7 @@ export default function ProductsHeader() {
       <div className="flex gap-4 lg:basis-1/3">
         <ECommerceSelect
           placeholder="Sort by"
-          value=""
+          value={sort ?? ''}
           selectItems={[
             { label: 'Newest First', value: 'createdAt:desc' },
             { label: 'Oldest First', value: 'createdAt:asc' },

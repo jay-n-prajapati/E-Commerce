@@ -22,11 +22,11 @@ const ECommerceTooltip = ({
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent
-          className="z-[10000] rounded-lg"
+          className="rounded-lg capitalize"
           side={side}
           align={align}
         >
-          <p className="capitalize">{tooltipContent}</p>
+          {tooltipContent}
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
